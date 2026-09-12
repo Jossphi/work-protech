@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/classical-fe2ab21a-edfa-48c3-b630-599a553acd19/styles.css">
+<script src="_ds/classical-fe2ab21a-edfa-48c3-b630-599a553acd19/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Barlow:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --color-accent:#d8231c; --color-accent-2:#d8231c;
+    --color-accent-100:#fdeceb; --color-accent-200:#f9cfcd; --color-accent-300:#f1a5a1;
+    --color-accent-400:#e6716b; --color-accent-500:#d8231c; --color-accent-600:#b81c16;
+    --color-accent-700:#941410; --color-accent-800:#6d0d0a; --color-accent-900:#470807;
+    --color-bg:#f3f2f2; --color-surface:#e9e9ea; --color-text:#1f2124;
+    --font-heading:"Archivo", system-ui, sans-serif;
+    --font-body:"Barlow", system-ui, sans-serif;
+    --font-heading-weight:600;
+    --wp-steel:#7f878c;
+  }
+  body{font-size:15px}
+  h1,h2,h3,h4,h5,h6{letter-spacing:-0.01em}
+  a{color:var(--color-accent-700);text-decoration:none}
+  a:hover{color:var(--color-accent);text-decoration:underline}
+  .wp-num{font-variant-numeric:tabular-nums}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:var(--color-bg);font-family:var(--font-body);color:var(--color-text)">
+
+  <div style="background:var(--color-accent);color:#fff;font-size:12.5px;letter-spacing:0.04em">
+    <div style="max-width:1240px;margin:0 auto;padding:7px 20px;display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between">
+      <span>Distribuidor oficial Paredes Seguridad &amp; Singer Safety · Despacho a todo el Perú</span>
+      <span>ventas@workprotech.com · +51 936 628 362</span>
+    </div>
+  </div>
+
+  <header style="background:#fff;border-bottom:1px solid var(--color-divider)">
+    <div style="max-width:1240px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+      <a href="#" onClick="{{ goHome }}" style="display:block;flex:0 0 auto">
+        <img src="img/logo-wp.png" alt="Work Protech" style="height:40px;width:auto">
+      </a>
+      <div style="flex:1 1 320px;min-width:220px;display:flex;border:1px solid var(--color-neutral-400);border-radius:var(--radius-md);overflow:hidden;background:#fff">
+        <input class="input" placeholder="Buscar EPP: botas S3, guantes nitrilo, chaleco..." value="{{ query }}" onInput="{{ onSearch }}" style="flex:1;border:0;border-radius:0;font-size:14px">
+        <button class="btn" onClick="{{ goSearch }}" style="border:0;border-radius:0;background:var(--color-accent);color:#fff;padding:0 18px;font-size:13px;letter-spacing:0.06em;text-transform:uppercase">Buscar</button>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <button class="btn btn-ghost" onClick="{{ goQuote }}" style="font-size:13px">Cotización</button>
+        <button class="btn btn-primary" onClick="{{ goCart }}" style="font-size:13px">Carrito · <span class="wp-num">{{ cartCount }}</span></button>
+      </div>
+    </div>
+    <nav style="border-top:1px solid var(--color-divider)">
+      <div style="max-width:1240px;margin:0 auto;padding:0 20px;display:flex;gap:0 24px;flex-wrap:wrap">
+        <sc-for list="{{ navCats }}" as="cat" hint-placeholder-count="6">
+          <a href="#" onClick="{{ cat.onClick }}" style="padding:10px 0;font-size:13.5px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:var(--color-neutral-800);border-bottom:2px solid transparent" style-hover="color:var(--color-accent);border-bottom-color:var(--color-accent)">{{ cat.label }}</a>
+        </sc-for>
+      </div>
+    </nav>
+  </header>
+
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <div>
+      <section style="position:relative;background:#15171a;color:#fff;overflow:hidden">
+        <img src="img/hero-hivis.png" alt="Trabajador con ropa de alta visibilidad" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.55">
+        <div style="position:relative;max-width:1240px;margin:0 auto;padding:96px 20px 104px">
+          <div style="max-width:620px">
+            <div style="display:inline-block;background:var(--color-accent);padding:5px 12px;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;font-weight:600">Equipos de protección individual</div>
+            <h1 style="font-size:58px;line-height:1.02;margin:20px 0 16px;color:#fff;font-weight:700;text-wrap:balance">Innovación que te protege</h1>
+            <p style="font-size:18px;line-height:1.55;color:#e6e6e6;max-width:520px">Calzado, ropa de trabajo, alta visibilidad y protección personal bajo normativas europeas EN e ISO. De la cabeza a los pies, para industria, construcción y logística.</p>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:28px">
+              <button class="btn" onClick="{{ goAll }}" style="background:var(--color-accent);color:#fff;border:1px solid var(--color-accent);padding:12px 26px;font-size:14px;letter-spacing:0.05em;text-transform:uppercase" style-hover="background:var(--color-accent-600);border-color:var(--color-accent-600)">Ver catálogo</button>
+              <button class="btn" onClick="{{ goQuote }}" style="background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.7);padding:12px 26px;font-size:14px;letter-spacing:0.05em;text-transform:uppercase" style-hover="background:rgba(255,255,255,0.12)">Cotización por volumen</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section style="background:#fff;border-bottom:1px solid var(--color-divider)">
+        <div style="max-width:1240px;margin:0 auto;padding:22px 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:20px">
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <div style="width:3px;background:var(--color-accent);align-self:stretch"></div>
+            <div><div style="font-family:var(--font-heading);font-weight:600;font-size:14.5px">Normativa EN certificada</div><div style="font-size:13px;color:var(--color-neutral-700)">Fichas técnicas y declaración UE</div></div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <div style="width:3px;background:var(--color-accent);align-self:stretch"></div>
+            <div><div style="font-family:var(--font-heading);font-weight:600;font-size:14.5px">Stock en Lima</div><div style="font-size:13px;color:var(--color-neutral-700)">Despacho en 24–48 h</div></div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <div style="width:3px;background:var(--color-accent);align-self:stretch"></div>
+            <div><div style="font-family:var(--font-heading);font-weight:600;font-size:14.5px">Precios por volumen</div><div style="font-size:13px;color:var(--color-neutral-700)">Escalas desde 12 unidades</div></div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <div style="width:3px;background:var(--color-accent);align-self:stretch"></div>
+            <div><div style="font-family:var(--font-heading);font-weight:600;font-size:14.5px">Asesoría técnica</div><div style="font-size:13px;color:var(--color-neutral-700)">Selección de EPP por puesto</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section style="max-width:1240px;margin:0 auto;padding:56px 20px 8px">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap">
+          <h2 style="font-size:30px;margin:0">Comprar por categoría</h2>
+          <a href="#" onClick="{{ goAll }}" style="font-size:13.5px;letter-spacing:0.05em;text-transform:uppercase;font-weight:600">Ver todo el catálogo</a>
+        </div>
+        <hr class="hr">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:16px;margin-top:8px">
+          <sc-for list="{{ catCards }}" as="c" hint-placeholder-count="6">
+            <a href="#" onClick="{{ c.onClick }}" class="card" style="background:#fff;padding:20px 18px;display:block;color:var(--color-text);border:1px solid var(--color-divider);border-radius:var(--radius-md)" style-hover="border-color:var(--color-accent);box-shadow:var(--shadow-sm);text-decoration:none">
+              <div style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--color-accent);font-weight:600">{{ c.kicker }}</div>
+              <div style="font-family:var(--font-heading);font-weight:600;font-size:19px;margin-top:8px;line-height:1.15">{{ c.label }}</div>
+              <div style="font-size:13px;color:var(--color-neutral-700);margin-top:6px" class="wp-num">{{ c.count }}</div>
+            </a>
+          </sc-for>
+        </div>
+      </section>
+
+      <section style="max-width:1240px;margin:0 auto;padding:44px 20px 16px">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap">
+          <h2 style="font-size:30px;margin:0">Más vendidos</h2>
+          <span style="font-size:13px;color:var(--color-neutral-700)">Precios incluyen IGV</span>
+        </div>
+        <hr class="hr">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:18px">
+          <sc-for list="{{ featured }}" as="p" hint-placeholder-count="8">
+            <div class="card" style="background:#fff;border:1px solid var(--color-divider);border-radius:var(--radius-md);overflow:hidden;display:flex;flex-direction:column" style-hover="box-shadow:var(--shadow-md);border-color:var(--color-neutral-400)">
+              <a href="#" onClick="{{ p.onOpen }}" style="display:block;position:relative;background:#fff;aspect-ratio:4/3;overflow:hidden">
+                <img src="{{ p.img }}" alt="{{ p.name }}" style="width:100%;height:100%;object-fit:contain;padding:10px">
+                <span style="position:absolute;top:10px;left:10px;background:var(--color-neutral-900);color:#fff;font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px">{{ p.brand }}</span>
+              </a>
+              <div style="padding:14px 16px 16px;border-top:1px solid var(--color-divider);display:flex;flex-direction:column;gap:8px;flex:1">
+                <div style="font-size:11.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-neutral-600)">{{ p.catLabel }}</div>
+                <a href="#" onClick="{{ p.onOpen }}" style="font-family:var(--font-heading);font-weight:600;font-size:16.5px;line-height:1.2;color:var(--color-text)" style-hover="color:var(--color-accent)">{{ p.name }}</a>
+                <div style="font-size:12.5px;color:var(--color-neutral-700)">{{ p.norm }}</div>
+                <div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:8px">
+                  <span class="wp-num" style="font-family:var(--font-heading);font-weight:700;font-size:19px">{{ p.price }}</span>
+                  <button class="btn btn-primary" onClick="{{ p.onAdd }}" style="font-size:12px;padding:7px 12px;letter-spacing:0.05em;text-transform:uppercase">Agregar</button>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <section style="max-width:1240px;margin:0 auto;padding:44px 20px">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;align-items:stretch">
+          <div style="position:relative;overflow:hidden;min-height:280px;background:#000">
+            <img src="img/banner-calzado.png" alt="Calzado de seguridad" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.78">
+            <div style="position:relative;padding:34px 30px;display:flex;flex-direction:column;height:100%;justify-content:flex-end;color:#fff">
+              <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#fff;background:var(--color-accent);display:inline-block;align-self:flex-start;padding:4px 10px">Paredes Seguridad</div>
+              <h3 style="color:#fff;font-size:30px;margin:14px 0 6px;font-weight:700">Calzado de seguridad</h3>
+              <p style="color:#e4e4e4;font-size:15px;margin:0 0 16px;max-width:360px">Punteras no metálicas, plantilla antiperforación y suelas antideslizantes SRC.</p>
+              <a href="#" onClick="{{ goCalzado }}" style="align-self:flex-start;color:#fff;border:1px solid rgba(255,255,255,0.75);padding:10px 20px;font-size:13px;letter-spacing:0.06em;text-transform:uppercase" style-hover="background:rgba(255,255,255,0.15);text-decoration:none">Ver la línea</a>
+            </div>
+          </div>
+          <div style="background:#fff;border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:30px">
+            <div style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--color-accent);font-weight:600">Compras corporativas</div>
+            <h3 style="font-size:27px;margin:10px 0 10px">Equipa a tu cuadrilla completa</h3>
+            <p style="font-size:15px;color:var(--color-neutral-800);margin-bottom:18px">Envíanos tu lista de puestos y te devolvemos una propuesta de EPP con escalas de precio, tallas y plazos de entrega. Facturación con RUC y órdenes de compra.</p>
+            <ul style="list-style:none;padding:0;margin:0 0 22px;display:flex;flex-direction:column;gap:10px;font-size:14.5px">
+              <li style="display:flex;gap:10px"><span style="color:var(--color-accent);font-weight:700">—</span>Descuentos desde 12 unidades por SKU</li>
+              <li style="display:flex;gap:10px"><span style="color:var(--color-accent);font-weight:700">—</span>Marcado y serigrafía con tu logo</li>
+              <li style="display:flex;gap:10px"><span style="color:var(--color-accent);font-weight:700">—</span>Fichas técnicas y certificados por lote</li>
+            </ul>
+            <button class="btn btn-primary" onClick="{{ goQuote }}" style="letter-spacing:0.05em;text-transform:uppercase;font-size:13px;padding:11px 22px">Solicitar cotización</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isList }}" hint-placeholder-val="{{ false }}">
+    <section style="max-width:1240px;margin:0 auto;padding:34px 20px 60px">
+      <div style="font-size:13px;color:var(--color-neutral-700)"><a href="#" onClick="{{ goHome }}">Inicio</a> / {{ listTitle }}</div>
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:8px">
+        <h2 style="font-size:32px;margin:0">{{ listTitle }}</h2>
+        <span class="wp-num" style="font-size:13.5px;color:var(--color-neutral-700)">{{ listCount }}</span>
+      </div>
+      <hr class="hr">
+      <div style="display:grid;grid-template-columns:minmax(0,240px) minmax(0,1fr);gap:28px;align-items:start">
+        <aside style="background:#fff;border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:20px">
+          <div style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;font-weight:600;color:var(--color-neutral-700)">Categoría</div>
+          <div style="display:flex;flex-direction:column;gap:2px;margin-top:10px">
+            <sc-for list="{{ filterCats }}" as="f" hint-placeholder-count="7">
+              <a href="#" onClick="{{ f.onClick }}" style="font-size:14px;padding:6px 8px;border-radius:var(--radius-sm);color:{{ f.color }};background:{{ f.bg }}" style-hover="background:var(--color-accent-100);text-decoration:none">{{ f.label }}</a>
+            </sc-for>
+          </div>
+          <hr class="hr">
+          <div style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;font-weight:600;color:var(--color-neutral-700)">Marca</div>
+          <div style="display:flex;flex-direction:column;gap:2px;margin-top:10px">
+            <sc-for list="{{ filterBrands }}" as="b" hint-placeholder-count="3">
+              <a href="#" onClick="{{ b.onClick }}" style="font-size:14px;padding:6px 8px;border-radius:var(--radius-sm);color:{{ b.color }};background:{{ b.bg }}" style-hover="background:var(--color-accent-100);text-decoration:none">{{ b.label }}</a>
+            </sc-for>
+          </div>
+          <hr class="hr">
+          <div style="font-size:13px;color:var(--color-neutral-700);line-height:1.5">¿No encuentras un artículo? Escríbenos a <a href="mailto:ventas@workprotech.com">ventas@workprotech.com</a> y lo cotizamos.</div>
+        </aside>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px">
+          <sc-for list="{{ listed }}" as="p" hint-placeholder-count="9">
+            <div class="card" style="background:#fff;border:1px solid var(--color-divider);border-radius:var(--radius-md);overflow:hidden;display:flex;flex-direction:column" style-hover="box-shadow:var(--shadow-md);border-color:var(--color-neutral-400)">
+              <a href="#" onClick="{{ p.onOpen }}" style="display:block;position:relative;background:#fff;aspect-ratio:4/3;overflow:hidden">
+                <img src="{{ p.img }}" alt="{{ p.name }}" style="width:100%;height:100%;object-fit:contain;padding:10px">
+                <span style="position:absolute;top:10px;left:10px;background:var(--color-neutral-900);color:#fff;font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px">{{ p.brand }}</span>
+              </a>
+              <div style="padding:14px 16px 16px;border-top:1px solid var(--color-divider);display:flex;flex-direction:column;gap:8px;flex:1">
+                <div style="font-size:11.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-neutral-600)">{{ p.catLabel }}</div>
+                <a href="#" onClick="{{ p.onOpen }}" style="font-family:var(--font-heading);font-weight:600;font-size:16.5px;line-height:1.2;color:var(--color-text)" style-hover="color:var(--color-accent)">{{ p.name }}</a>
+                <div style="font-size:12.5px;color:var(--color-neutral-700)">{{ p.norm }}</div>
+                <div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:8px">
+                  <span class="wp-num" style="font-family:var(--font-heading);font-weight:700;font-size:19px">{{ p.price }}</span>
+                  <button class="btn btn-primary" onClick="{{ p.onAdd }}" style="font-size:12px;padding:7px 12px;letter-spacing:0.05em;text-transform:uppercase">Agregar</button>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ isProduct }}" hint-placeholder-val="{{ false }}">
+    <section style="max-width:1240px;margin:0 auto;padding:34px 20px 60px">
+      <div style="font-size:13px;color:var(--color-neutral-700)"><a href="#" onClick="{{ goHome }}">Inicio</a> / <a href="#" onClick="{{ goAll }}">Catálogo</a> / {{ pName }}</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:40px;margin-top:22px;align-items:start">
+        <div>
+          <div style="background:#fff;border:1px solid var(--color-divider);border-radius:var(--radius-md);aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;padding:24px">
+            <img src="{{ pImg }}" alt="{{ pName }}" style="max-width:100%;max-height:100%;object-fit:contain">
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px">
+            <div style="background:#fff;border:1px solid var(--color-divider);border-radius:var(--radius-md);aspect-ratio:1/1;padding:10px"><img src="{{ pImg }}" alt="" style="width:100%;height:100%;object-fit:contain"></div>
+            <div style="background:#fff;border:1px solid var(--color-divider);border-radius:var(--radius-md);aspect-ratio:1/1;padding:10px;opacity:0.65"><img src="{{ pImg }}" alt="" style="width:100%;height:100%;object-fit:contain;transform:scaleX(-1)"></div>
+            <div style="background:#fff;border:1px solid var(--color-divider);border-radius:var(--radius-md);aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-600)">Ficha técnica</div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--color-accent);font-weight:600">{{ pBrand }}</div>
+          <h2 style="font-size:34px;margin:10px 0 6px;line-height:1.08">{{ pName }}</h2>
+          <div class="wp-num" style="font-size:13px;color:var(--color-neutral-700)">Código {{ pCode }} · {{ pNorm }}</div>
+          <div style="display:flex;align-items:baseline;gap:12px;margin:22px 0 4px">
+            <span class="wp-num" style="font-family:var(--font-heading);font-weight:700;font-size:34px">{{ pPrice }}</span>
+            <span style="font-size:13px;color:var(--color-neutral-700)">IGV incluido</span>
+          </div>
+          <div style="font-size:13.5px;color:var(--color-accent-700)">{{ pStock }}</div>
+          <hr class="hr">
+          <p style="font-size:15.5px;line-height:1.6;color:var(--color-neutral-800)">{{ pDesc }}</p>
+          <div style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;font-weight:600;color:var(--color-neutral-700);margin-top:18px">{{ pSizeLabel }}</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px">
+            <sc-for list="{{ pSizes }}" as="s" hint-placeholder-count="8">
+              <button class="btn" onClick="{{ s.onClick }}" style="min-width:52px;padding:8px 10px;font-size:13.5px;border:1px solid {{ s.border }};background:{{ s.bg }};color:{{ s.color }}" style-hover="border-color:var(--color-accent)">{{ s.label }}</button>
+            </sc-for>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:26px">
+            <div style="display:flex;align-items:center;border:1px solid var(--color-neutral-400);border-radius:var(--radius-md);overflow:hidden">
+              <button class="btn btn-ghost" onClick="{{ decQty }}" style="padding:10px 14px;font-size:16px">−</button>
+              <span class="wp-num" style="min-width:44px;text-align:center;font-size:15px">{{ qty }}</span>
+              <button class="btn btn-ghost" onClick="{{ incQty }}" style="padding:10px 14px;font-size:16px">+</button>
+            </div>
+            <button class="btn" onClick="{{ addCurrent }}" style="background:var(--color-accent);color:#fff;border:1px solid var(--color-accent);padding:12px 28px;font-size:13.5px;letter-spacing:0.06em;text-transform:uppercase" style-hover="background:var(--color-accent-600);border-color:var(--color-accent-600)">Agregar al carrito</button>
+            <button class="btn btn-ghost" onClick="{{ goQuote }}" style="padding:12px 20px;font-size:13.5px">Cotizar por volumen</button>
+          </div>
+          <hr class="hr">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px">
+            <sc-for list="{{ pFeatures }}" as="f" hint-placeholder-count="4">
+              <div style="border-left:2px solid var(--color-accent);padding-left:12px">
+                <div style="font-family:var(--font-heading);font-weight:600;font-size:14px">{{ f.title }}</div>
+                <div style="font-size:13px;color:var(--color-neutral-700);line-height:1.45">{{ f.body }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:24px;background:#fff;border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:18px 20px">
+            <div style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;font-weight:600;color:var(--color-neutral-700);margin-bottom:10px">Escalas de precio</div>
+            <table class="table" style="width:100%;font-size:14px">
+              <thead><tr><th style="text-align:left">Cantidad</th><th style="text-align:right">Precio unitario</th></tr></thead>
+              <tbody>
+                <sc-for list="{{ pTiers }}" as="t" hint-placeholder-count="3">
+                  <tr><td class="wp-num">{{ t.qty }}</td><td class="wp-num" style="text-align:right">{{ t.price }}</td></tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:56px">
+        <h3 style="font-size:24px;margin:0">También te puede servir</h3>
+        <hr class="hr">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px">
+          <sc-for list="{{ related }}" as="p" hint-placeholder-count="4">
+            <div class="card" style="background:#fff;border:1px solid var(--color-divider);border-radius:var(--radius-md);overflow:hidden;display:flex;flex-direction:column" style-hover="box-shadow:var(--shadow-md);border-color:var(--color-neutral-400)">
+              <a href="#" onClick="{{ p.onOpen }}" style="display:block;background:#fff;aspect-ratio:4/3;overflow:hidden">
+                <img src="{{ p.img }}" alt="{{ p.name }}" style="width:100%;height:100%;object-fit:contain;padding:10px">
+              </a>
+              <div style="padding:14px 16px 16px;border-top:1px solid var(--color-divider);display:flex;flex-direction:column;gap:8px;flex:1">
+                <a href="#" onClick="{{ p.onOpen }}" style="font-family:var(--font-heading);font-weight:600;font-size:15.5px;line-height:1.2;color:var(--color-text)" style-hover="color:var(--color-accent)">{{ p.name }}</a>
+                <div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px">
+                  <span class="wp-num" style="font-family:var(--font-heading);font-weight:700;font-size:17px">{{ p.price }}</span>
+                  <button class="btn btn-primary" onClick="{{ p.onAdd }}" style="font-size:12px;padding:6px 11px;letter-spacing:0.05em;text-transform:uppercase">Agregar</button>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ isCart }}" hint-placeholder-val="{{ false }}">
+    <section style="max-width:1240px;margin:0 auto;padding:34px 20px 60px">
+      <h2 style="font-size:32px;margin:0">Tu carrito</h2>
+      <hr class="hr">
+      <sc-if value="{{ cartEmpty }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#fff;border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:44px;text-align:center">
+          <p style="font-size:16px;color:var(--color-neutral-700)">Aún no has agregado productos.</p>
+          <button class="btn btn-primary" onClick="{{ goAll }}" style="letter-spacing:0.05em;text-transform:uppercase;font-size:13px;padding:11px 22px">Ir al catálogo</button>
+        </div>
+      </sc-if>
+      <sc-if value="{{ cartHasItems }}" hint-placeholder-val="{{ true }}">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px;align-items:start">
+          <div style="background:#fff;border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:6px 20px 20px;grid-column:span 2;min-width:0">
+            <table class="table" style="width:100%;font-size:14.5px">
+              <thead><tr><th style="text-align:left">Producto</th><th style="text-align:center">Talla</th><th style="text-align:center">Cantidad</th><th style="text-align:right">Importe</th></tr></thead>
+              <tbody>
+                <sc-for list="{{ cartLines }}" as="l" hint-placeholder-count="2">
+                  <tr>
+                    <td style="padding:14px 0">
+                      <div style="display:flex;gap:14px;align-items:center">
+                        <img src="{{ l.img }}" alt="{{ l.name }}" style="width:66px;height:52px;object-fit:contain;border:1px solid var(--color-divider);border-radius:var(--radius-sm);background:#fff">
+                        <div>
+                          <div style="font-family:var(--font-heading);font-weight:600;font-size:15px">{{ l.name }}</div>
+                          <div class="wp-num" style="font-size:12.5px;color:var(--color-neutral-700)">{{ l.brand }} · {{ l.price }} c/u</div>
+                          <a href="#" onClick="{{ l.onRemove }}" style="font-size:12.5px">Quitar</a>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="wp-num" style="text-align:center">{{ l.size }}</td>
+                    <td style="text-align:center">
+                      <div style="display:inline-flex;align-items:center;border:1px solid var(--color-neutral-400);border-radius:var(--radius-md)">
+                        <button class="btn btn-ghost" onClick="{{ l.onDec }}" style="padding:5px 11px">−</button>
+                        <span class="wp-num" style="min-width:30px;text-align:center">{{ l.qty }}</span>
+                        <button class="btn btn-ghost" onClick="{{ l.onInc }}" style="padding:5px 11px">+</button>
+                      </div>
+                    </td>
+                    <td class="wp-num" style="text-align:right;font-weight:600">{{ l.total }}</td>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+          <div style="background:#fff;border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:24px">
+            <div style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;font-weight:600;color:var(--color-neutral-700)">Resumen</div>
+            <div style="display:flex;justify-content:space-between;font-size:14.5px;margin-top:16px"><span>Subtotal</span><span class="wp-num">{{ subtotal }}</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:14.5px;margin-top:8px"><span>IGV 18%</span><span class="wp-num">{{ igv }}</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:14.5px;margin-top:8px"><span>Envío Lima Metropolitana</span><span>Gratis</span></div>
+            <hr class="hr">
+            <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:var(--font-heading);font-weight:600;font-size:17px">Total</span><span class="wp-num" style="font-family:var(--font-heading);font-weight:700;font-size:24px">{{ total }}</span></div>
+            <button class="btn" onClick="{{ goCheckout }}" style="width:100%;margin-top:18px;background:var(--color-accent);color:#fff;border:1px solid var(--color-accent);padding:13px;font-size:13.5px;letter-spacing:0.06em;text-transform:uppercase" style-hover="background:var(--color-accent-600);border-color:var(--color-accent-600)">Continuar compra</button>
+            <button class="btn btn-ghost" onClick="{{ goAll }}" style="width:100%;margin-top:8px;font-size:13px">Seguir comprando</button>
+            <div style="font-size:12.5px;color:var(--color-neutral-700);margin-top:14px;line-height:1.5">Facturación con RUC disponible. Entrega en 24–48 h para stock en Lima.</div>
+          </div>
+        </div>
+      </sc-if>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ isCheckout }}" hint-placeholder-val="{{ false }}">
+    <section style="max-width:1000px;margin:0 auto;padding:34px 20px 60px">
+      <h2 style="font-size:32px;margin:0">Finalizar pedido</h2>
+      <hr class="hr">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:28px;align-items:start">
+        <div style="background:#fff;border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:24px;display:flex;flex-direction:column;gap:14px">
+          <div style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;font-weight:600;color:var(--color-neutral-700)">Datos de facturación</div>
+          <div class="field"><label>Razón social o nombre</label><input class="input" placeholder="Constructora Andina S.A.C."></div>
+          <div class="field"><label>RUC / DNI</label><input class="input" placeholder="20615339637"></div>
+          <div class="field"><label>Correo</label><input class="input" placeholder="compras@empresa.com"></div>
+          <div class="field"><label>Dirección de entrega</label><input class="input" placeholder="Av. Argentina 2020, Callao"></div>
+          <div class="field"><label>Orden de compra (opcional)</label><input class="input" placeholder="OC-2026-0142"></div>
+        </div>
+        <div style="background:#fff;border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:24px">
+          <div style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;font-weight:600;color:var(--color-neutral-700)">Tu pedido</div>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-top:14px">
+            <sc-for list="{{ cartLines }}" as="l" hint-placeholder-count="2">
+              <div style="display:flex;justify-content:space-between;gap:12px;font-size:14px"><span>{{ l.name }} × <span class="wp-num">{{ l.qty }}</span></span><span class="wp-num">{{ l.total }}</span></div>
+            </sc-for>
+          </div>
+          <hr class="hr">
+          <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:var(--font-heading);font-weight:600;font-size:17px">Total</span><span class="wp-num" style="font-family:var(--font-heading);font-weight:700;font-size:24px">{{ total }}</span></div>
+          <button class="btn" onClick="{{ placeOrder }}" style="width:100%;margin-top:18px;background:var(--color-accent);color:#fff;border:1px solid var(--color-accent);padding:13px;font-size:13.5px;letter-spacing:0.06em;text-transform:uppercase" style-hover="background:var(--color-accent-600);border-color:var(--color-accent-600)">Confirmar pedido</button>
+          <div style="font-size:12.5px;color:var(--color-neutral-700);margin-top:12px;line-height:1.5">Te enviaremos la proforma por correo; el despacho se coordina al confirmar el pago o la orden de compra.</div>
+        </div>
+      </div>
+      <sc-if value="{{ orderPlaced }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:24px;border:1px solid var(--color-accent);background:var(--color-accent-100);border-radius:var(--radius-md);padding:20px 24px">
+          <div style="font-family:var(--font-heading);font-weight:600;font-size:18px">Pedido registrado</div>
+          <div style="font-size:14.5px;color:var(--color-neutral-800)">Un asesor de Work Protech te contactará dentro de las próximas 2 horas hábiles.</div>
+        </div>
+      </sc-if>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ isQuote }}" hint-placeholder-val="{{ false }}">
+    <section style="max-width:1000px;margin:0 auto;padding:34px 20px 60px">
+      <h2 style="font-size:32px;margin:0">Cotización por volumen</h2>
+      <p style="font-size:15.5px;color:var(--color-neutral-800);max-width:640px">Cuéntanos qué puestos necesitas equipar y armamos la propuesta de EPP con escalas de precio, tallas y plazos.</p>
+      <hr class="hr">
+      <div style="background:#fff;border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:26px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
+        <div class="field"><label>Empresa</label><input class="input" placeholder="Minera del Norte S.A."></div>
+        <div class="field"><label>Contacto</label><input class="input" placeholder="Nombre y apellido"></div>
+        <div class="field"><label>Correo corporativo</label><input class="input" placeholder="compras@empresa.com"></div>
+        <div class="field"><label>Teléfono</label><input class="input" placeholder="+51 999 999 999"></div>
+        <div class="field" style="grid-column:1/-1"><label>Detalle del requerimiento</label><input class="input" placeholder="30 pares de botas S3 talla 40–44, 50 chalecos clase 2..."></div>
+        <div style="grid-column:1/-1"><button class="btn" onClick="{{ goHome }}" style="background:var(--color-accent);color:#fff;border:1px solid var(--color-accent);padding:12px 26px;font-size:13.5px;letter-spacing:0.06em;text-transform:uppercase" style-hover="background:var(--color-accent-600);border-color:var(--color-accent-600)">Enviar solicitud</button></div>
+      </div>
+    </section>
+  </sc-if>
+
+  <footer style="background:#1f2124;color:#d9d9d9;margin-top:40px">
+    <div style="max-width:1240px;margin:0 auto;padding:48px 20px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:32px">
+      <div>
+        <img src="img/logo-wp.png" alt="Work Protech" style="height:38px;width:auto;background:#fff;padding:6px 10px;border-radius:var(--radius-sm)">
+        <p style="font-size:14px;color:#b7b7b7;margin-top:14px;line-height:1.55">Equipos de protección individual y abastecimiento industrial. Representantes de Paredes Seguridad y Singer Safety en el Perú.</p>
+      </div>
+      <div>
+        <div style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#fff;font-weight:600;margin-bottom:12px">Catálogo</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:14px">
+          <a href="#" onClick="{{ goCalzado }}" style="color:#d9d9d9">Calzado de seguridad</a>
+          <a href="#" onClick="{{ goAll }}" style="color:#d9d9d9">Ropa de alta visibilidad</a>
+          <a href="#" onClick="{{ goAll }}" style="color:#d9d9d9">Retardante de llama</a>
+          <a href="#" onClick="{{ goAll }}" style="color:#d9d9d9">Guantes y protección ocular</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#fff;font-weight:600;margin-bottom:12px">Contacto</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;color:#b7b7b7">
+          <span>Work Protech SACS · RUC 20615339637</span>
+          <span>C/ Bolívar 472 ofc. 506, Miraflores</span>
+          <span class="wp-num">+51 936 628 362</span>
+          <a href="mailto:ventas@workprotech.com" style="color:#d9d9d9">ventas@workprotech.com</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#fff;font-weight:600;margin-bottom:12px">Síguenos</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;color:#b7b7b7">
+          <span>www.workprotech.com</span>
+          <span>@workprotechoficial</span>
+          <span>@workprotech_oficial</span>
+        </div>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,0.14)">
+      <div style="max-width:1240px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12.5px;color:#9a9a9a">
+        <span>© 2026 Work Protech SACS. Todos los derechos reservados.</span>
+        <span>Innovación que te protege</span>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#d8231c&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#d8231c&quot;,&quot;#b81c16&quot;,&quot;#e2571f&quot;,&quot;#1f2124&quot;],&quot;section&quot;:&quot;Marca&quot;},&quot;showStock&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Catálogo&quot;}}">
+const CATS = [
+  { id: 'calzado', label: 'Calzado de seguridad', kicker: 'S1P · S3 · SRC' },
+  { id: 'altavis', label: 'Alta visibilidad', kicker: 'EN ISO 20471' },
+  { id: 'ropa', label: 'Ropa de trabajo', kicker: 'Multibolsillo' },
+  { id: 'fr', label: 'Retardante de llama', kicker: 'EN ISO 11612' },
+  { id: 'ocular', label: 'Protección ocular', kicker: 'EN 166' },
+  { id: 'guantes', label: 'Guantes', kicker: 'EN 388' }
+];
+
+const PRODUCTS = [
+  { id:'matrix', name:'Zapatillas de Seguridad Matrix', brand:'Paredes', cat:'calzado', code:'PS-MTX-01', price:289, img:'img/prod-matrix.png', norm:'S1P SRC · Puntera CarbonShield',
+    desc:'Protección integral para industria ligera, logística y sanidad. Puntera de fibra de carbono, plantilla CloudComfort y suela TopGrip de agarre superantideslizante.',
+    sizes:['38','39','40','41','42','43','44','45'], sizeLabel:'Talla (EU)',
+    features:[['Puntera CarbonShield','Fibra de carbono, ligera y resistente a impactos'],['Plantilla CloudComfort','Sistema de nube inversa, amortiguación óptima'],['Tecnología EliteRL3050','Poliuretano de baja densidad y poro abierto'],['Suela TopGrip','Agarre superantideslizante, seguridad extra']] },
+  { id:'hammer', name:'Botas de Seguridad Hammer', brand:'Paredes', cat:'calzado', code:'PS-HMR-03', price:349, img:'img/prod-hammer.png', norm:'S3 SRC · Piel nobuck encerada',
+    desc:'Durabilidad, protección y confort en un diseño robusto para construcción y trabajos al aire libre. Piel nobuck encerada de alta calidad con refuerzos antiabrasión.',
+    sizes:['39','40','41','42','43','44','45','46'], sizeLabel:'Talla (EU)',
+    features:[['Puntera de fibra de vidrio','Compact, ligera, no metálica'],['Plantilla antiperforación','Textil flexible, no metálica'],['Suela DualComfort','Dos densidades, amortiguación y estabilidad'],['Refuerzos antiabrasión','Alta resistencia, mayor durabilidad']] },
+  { id:'nadal', name:'Calzado de Seguridad Nadal', brand:'Paredes', cat:'calzado', code:'PS-NDL-02', price:265, img:'img/prod-nadal.png', norm:'S1P SRC · Piel serraje y textil',
+    desc:'Combinación de comodidad, ligereza y resistencia. Puntera de fibra de vidrio compact no metálica y plantilla antiperforación compact, protección sin peso extra.',
+    sizes:['38','39','40','41','42','43','44','45'], sizeLabel:'Talla (EU)',
+    features:[['DualComfort','Amortiguación y estabilidad dual'],['TopGrip & SRC','Agarre superantideslizante'],['Ultra ligereza','Componentes no metálicos'],['Forro HighDry','Alta absorción, pies secos']] },
+  { id:'rock', name:'Botas de Seguridad Rock', brand:'Paredes', cat:'calzado', code:'PS-RCK-05', price:319, img:'img/prod-rock.png', norm:'S3 SRC · Corte hidrofugado',
+    desc:'Calzado robusto de perfil bajo para entornos exigentes, con suela de doble densidad y refuerzo en puntera y talón.',
+    sizes:['39','40','41','42','43','44','45','46'], sizeLabel:'Talla (EU)',
+    features:[['Corte hidrofugado','Repele líquidos y polvo fino'],['Puntera no metálica','Ligera, sin conductividad térmica'],['Suela antiestática','Disipación controlada de carga'],['Entresuela EVA','Confort en jornadas largas']] },
+  { id:'tuva', name:'Camiseta Alta Visibilidad TUVA', brand:'Singer Safety', cat:'altavis', code:'TUVA/TUVO', price:89, img:'img/prod-camiseta.png', norm:'Clase 2 · 55% algodón, 45% poliéster',
+    desc:'Camiseta de manga larga de alta visibilidad, tela piqué de 170 g/m², interior de algodón, aberturas bajo las axilas y bandas retrorreflectantes flexibles segmentadas.',
+    sizes:['S','M','L','XL','2XL','3XL','4XL'], sizeLabel:'Talla',
+    features:[['Alta visibilidad clase 2','Bandas retrorreflectantes segmentadas'],['Interior de algodón','Confort en contacto con la piel'],['Tela piqué 170 g/m²','Transpirable y resistente'],['Colores','Amarillo o naranja con azul marino']] },
+  { id:'polma', name:'Polo Alta Visibilidad POLMA', brand:'Singer Safety', cat:'altavis', code:'POLMA/POLMO', price:79, img:'img/prod-polo.png', norm:'Clase 2 · Tela piqué 170 g/m²',
+    desc:'Polo de alta visibilidad con interior de algodón confortable y bandas retrorreflectantes flexibles segmentadas. Ideal para supervisión y trabajo en vía pública.',
+    sizes:['S','M','L','XL','2XL','3XL','4XL'], sizeLabel:'Talla',
+    features:[['Clase 2','Cumple EN ISO 20471'],['Cuello contrastado','Azul marino, menor suciedad visible'],['Interior de algodón','Uso prolongado sin irritación'],['ISO 14001 · OEKO-TEX','Producción certificada']] },
+  { id:'gil4', name:'Chaleco Alta Visibilidad GIL4BJ', brand:'Singer Safety', cat:'altavis', code:'GIL4BJ/GIL4BO', price:29.9, img:'img/prod-chaleco.png', norm:'Clase 2 · 100% poliéster 120 g/m²',
+    desc:'Chaleco de alta visibilidad con cierre autoadherente y bandas retrorreflectantes. El básico de visita y obra, disponible por caja de 50 unidades.',
+    sizes:['S','M','L','XL','2XL','3XL'], sizeLabel:'Talla',
+    features:[['Cierre autoadherente','Puesta y retiro rápidos'],['100% poliéster','Ligero, lavable'],['Empaque 5×10','Ideal para reparto masivo'],['Amarillo o naranja','Dos colores en stock']] },
+  { id:'valpar', name:'Cazadora Retardante de Llama VALPAR', brand:'Singer Safety', cat:'fr', code:'VALPAR', price:419, img:'img/prod-casaca-fr.png', norm:'EN ISO 11612 · 98% algodón, 2% carbón',
+    desc:'Cazadora de trabajo retardante de llama de visibilidad mejorada, 350 g/m², cuatro bolsillos exteriores, cierre con cremallera bajo solapa y bandas retrorreflectantes.',
+    sizes:['S','M','L','XL','2XL','3XL','4XL'], sizeLabel:'Talla',
+    features:[['Retardante de llama','Clase A1+A2, B1, C1, E1'],['Antiestática','Protección frente a arco eléctrico'],['Lavado industrial','Apta para ciclos PRO'],['Visibilidad mejorada','Tipo B3, bandas retrorreflectantes']] },
+  { id:'pisar', name:'Pantalón Retardante de Llama PISAR', brand:'Singer Safety', cat:'fr', code:'PISAR', price:379, img:'img/prod-pantalon-fr.png', norm:'EN ISO 11612 · 350 g/m²',
+    desc:'Pantalón de trabajo retardante de llama de visibilidad mejorada. Cuatro bolsillos exteriores, cintura elástica, presilla para cinturón y bandas retrorreflectantes.',
+    sizes:['S','M','L','XL','2XL','3XL','4XL'], sizeLabel:'Talla',
+    features:[['98% algodón, 2% carbón','Transpirable y protector'],['Cintura elástica','Ajuste sobre capas térmicas'],['Lavado industrial','Resistencia al ciclo intensivo'],['Color azul y naranja','Combina con la cazadora VALPAR']] },
+  { id:'evamouss', name:'Gafas de Protección EVAMOUSS', brand:'Singer Safety', cat:'ocular', code:'EVAMOUSS', price:59, img:'img/prod-gafas.png', norm:'EN 166 · Antivaho y antirrayaduras',
+    desc:'Ocular de policarbonato incoloro de una sola pieza, 2,00 mm, con tratamiento anti vaho y anti rayaduras. Espuma de confort amovible (EVA) y patillas regulables pivotantes.',
+    sizes:['Única'], sizeLabel:'Talla',
+    features:[['Espuma amovible','Sella contra polvo y partículas'],['Antivaho','Visión estable con esfuerzo'],['Patillas regulables','Ajuste pivotante en altura'],['Policarbonato 2 mm','Resistencia al impacto']] },
+  { id:'grip100', name:'Guantes GRIP100 Nitrilo', brand:'Singer Safety', cat:'guantes', code:'GRIP100', price:18.9, img:'img/prod-guante-grip100.png', norm:'EN 388 4.1.2.1.X · Doble recubrimiento',
+    desc:'Guante de poliamida sin costura, galga 15, con doble recubrimiento de nitrilo: primera capa lisa y segunda capa arenada en palma para agarre en húmedo.',
+    sizes:['7','8','9','10','11'], sizeLabel:'Talla',
+    features:[['Doble recubrimiento','Nitrilo liso + arenado'],['Galga 15','Destreza fina sin perder protección'],['Puño elástico','Ajuste con ribete'],['Color negro y gris','Menor suciedad visible']] },
+  { id:'grip134', name:'Guantes GRIP134 Nitrilo ¾', brand:'Singer Safety', cat:'guantes', code:'GRIP134', price:21.5, img:'img/prod-guante-grip134.png', norm:'EN 388 · Recubrimiento ¾',
+    desc:'Guante de poliamida sin costura con primera capa de nitrilo liso ¾ recubierto y segunda capa arenada en palma. Mayor cobertura del dorso frente a salpicaduras.',
+    sizes:['7','8','9','10','11'], sizeLabel:'Talla',
+    features:[['Cobertura ¾','Protege dorso y nudillos'],['Agarre en húmedo','Nitrilo arenado en palma'],['Sin costura','Sin puntos de presión'],['Uso intensivo','Alta resistencia a la abrasión']] }
+];
+
+class Component extends DCLogic {
+  state = { screen: 'home', cat: 'all', brand: 'all', query: '', pid: null, size: null, qty: 1, cart: [], orderPlaced: false };
+
+  componentDidMount() {
+    const a = this.props.accentColor;
+    if (a) document.documentElement.style.setProperty('--color-accent', a);
+  }
+
+  fmt(n) { return 'S/ ' + n.toFixed(2); }
+  go(screen, patch) { this.setState(Object.assign({ screen, orderPlaced: false }, patch || {})); window.scrollTo(0, 0); }
+  catLabel(id) { const c = CATS.find(c => c.id === id); return c ? c.label : ''; }
+
+  add(p, size, qty) {
+    this.setState(s => {
+      const sz = size || (p.sizes.length > 1 ? p.sizes[Math.floor(p.sizes.length / 2)] : p.sizes[0]);
+      const cart = s.cart.slice();
+      const i = cart.findIndex(l => l.id === p.id && l.size === sz);
+      if (i >= 0) cart[i] = Object.assign({}, cart[i], { qty: cart[i].qty + (qty || 1) });
+      else cart.push({ id: p.id, size: sz, qty: qty || 1 });
+      return { cart };
+    });
+  }
+  setQty(i, d) {
+    this.setState(s => {
+      const cart = s.cart.slice();
+      const q = cart[i].qty + d;
+      if (q <= 0) cart.splice(i, 1); else cart[i] = Object.assign({}, cart[i], { qty: q });
+      return { cart };
+    });
+  }
+
+  cardVals(p) {
+    return {
+      img: p.img, name: p.name, brand: p.brand, norm: p.norm, catLabel: this.catLabel(p.cat),
+      price: this.fmt(p.price),
+      onOpen: e => { e.preventDefault(); this.go('product', { pid: p.id, size: null, qty: 1 }); },
+      onAdd: e => { e.preventDefault(); this.add(p); }
+    };
+  }
+
+  filtered() {
+    const q = this.state.query.trim().toLowerCase();
+    return PRODUCTS.filter(p =>
+      (this.state.cat === 'all' || p.cat === this.state.cat) &&
+      (this.state.brand === 'all' || p.brand === this.state.brand) &&
+      (!q || (p.name + ' ' + p.brand + ' ' + p.norm + ' ' + this.catLabel(p.cat)).toLowerCase().includes(q))
+    );
+  }
+
+  renderVals() {
+    const s = this.state;
+    const showStock = this.props.showStock ?? true;
+    const cartCount = s.cart.reduce((n, l) => n + l.qty, 0);
+    const p = PRODUCTS.find(x => x.id === s.pid) || PRODUCTS[0];
+    const size = s.size || (p.sizes.length > 1 ? p.sizes[Math.floor(p.sizes.length / 2)] : p.sizes[0]);
+    const lines = s.cart.map((l, i) => {
+      const prod = PRODUCTS.find(x => x.id === l.id);
+      return {
+        name: prod.name, brand: prod.brand, img: prod.img, size: l.size, qty: l.qty,
+        price: this.fmt(prod.price), total: this.fmt(prod.price * l.qty),
+        onInc: () => this.setQty(i, 1), onDec: () => this.setQty(i, -1),
+        onRemove: e => { e.preventDefault(); this.setQty(i, -l.qty); }
+      };
+    });
+    const sub = s.cart.reduce((n, l) => n + PRODUCTS.find(x => x.id === l.id).price * l.qty, 0);
+    const net = sub / 1.18;
+    const listed = this.filtered();
+
+    return {
+      cartCount, query: s.query, qty: s.qty, orderPlaced: s.orderPlaced,
+      isHome: s.screen === 'home', isList: s.screen === 'list', isProduct: s.screen === 'product',
+      isCart: s.screen === 'cart', isCheckout: s.screen === 'checkout', isQuote: s.screen === 'quote',
+      goHome: e => { e && e.preventDefault && e.preventDefault(); this.go('home'); },
+      goAll: e => { e && e.preventDefault && e.preventDefault(); this.go('list', { cat: 'all', brand: 'all', query: '' }); },
+      goCalzado: e => { e && e.preventDefault && e.preventDefault(); this.go('list', { cat: 'calzado', brand: 'all' }); },
+      goCart: () => this.go('cart'),
+      goCheckout: () => this.go('checkout'),
+      goQuote: () => this.go('quote'),
+      goSearch: () => this.go('list', { cat: 'all', brand: 'all' }),
+      onSearch: e => this.setState({ query: e.target.value }),
+      placeOrder: () => this.setState({ orderPlaced: true, cart: [] }),
+
+      navCats: CATS.map(c => ({ label: c.label, onClick: e => { e.preventDefault(); this.go('list', { cat: c.id, brand: 'all', query: '' }); } })),
+      catCards: CATS.map(c => ({
+        label: c.label, kicker: c.kicker,
+        count: PRODUCTS.filter(p => p.cat === c.id).length + ' productos',
+        onClick: e => { e.preventDefault(); this.go('list', { cat: c.id, brand: 'all', query: '' }); }
+      })),
+      featured: PRODUCTS.slice(0, 8).map(x => this.cardVals(x)),
+
+      listTitle: s.query.trim() ? 'Resultados para "' + s.query.trim() + '"' : (s.cat === 'all' ? 'Catálogo completo' : this.catLabel(s.cat)),
+      listCount: listed.length + (listed.length === 1 ? ' producto' : ' productos'),
+      listed: listed.map(x => this.cardVals(x)),
+      filterCats: [{ id: 'all', label: 'Todas las categorías' }].concat(CATS).map(c => ({
+        label: c.label,
+        color: s.cat === c.id ? 'var(--color-accent-700)' : 'var(--color-neutral-800)',
+        bg: s.cat === c.id ? 'var(--color-accent-100)' : 'transparent',
+        onClick: e => { e.preventDefault(); this.setState({ cat: c.id, query: '' }); }
+      })),
+      filterBrands: [{ id: 'all', label: 'Todas las marcas' }, { id: 'Paredes', label: 'Paredes Seguridad' }, { id: 'Singer Safety', label: 'Singer Safety' }].map(b => ({
+        label: b.label,
+        color: s.brand === b.id ? 'var(--color-accent-700)' : 'var(--color-neutral-800)',
+        bg: s.brand === b.id ? 'var(--color-accent-100)' : 'transparent',
+        onClick: e => { e.preventDefault(); this.setState({ brand: b.id }); }
+      })),
+
+      pName: p.name, pBrand: p.brand, pCode: p.code, pNorm: p.norm, pImg: p.img, pDesc: p.desc,
+      pPrice: this.fmt(p.price), pSizeLabel: p.sizeLabel,
+      pStock: showStock ? 'En stock — despacho en 24–48 h' : 'Disponible bajo pedido',
+      pSizes: p.sizes.map(sz => ({
+        label: sz,
+        bg: sz === size ? 'var(--color-accent-100)' : '#fff',
+        border: sz === size ? 'var(--color-accent)' : 'var(--color-neutral-400)',
+        color: sz === size ? 'var(--color-accent-700)' : 'var(--color-text)',
+        onClick: () => this.setState({ size: sz })
+      })),
+      pFeatures: p.features.map(f => ({ title: f[0], body: f[1] })),
+      pTiers: [
+        { qty: '1 – 11 unidades', price: this.fmt(p.price) },
+        { qty: '12 – 47 unidades', price: this.fmt(p.price * 0.92) },
+        { qty: '48 o más', price: this.fmt(p.price * 0.85) }
+      ],
+      incQty: () => this.setState(st => ({ qty: st.qty + 1 })),
+      decQty: () => this.setState(st => ({ qty: Math.max(1, st.qty - 1) })),
+      addCurrent: () => { this.add(p, size, s.qty); this.go('cart'); },
+      related: PRODUCTS.filter(x => x.cat === p.cat && x.id !== p.id).concat(PRODUCTS.filter(x => x.cat !== p.cat)).slice(0, 4).map(x => this.cardVals(x)),
+
+      cartLines: lines, cartEmpty: s.cart.length === 0, cartHasItems: s.cart.length > 0,
+      subtotal: this.fmt(net), igv: this.fmt(sub - net), total: this.fmt(sub)
+    };
+  }
+}
+</script>
+</body>
+</html>
