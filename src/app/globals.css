@@ -1,18 +1,101 @@
-:root{
-  --color-accent:#d8231c; --color-accent-2:#d8231c;
-  --color-accent-100:#fdeceb; --color-accent-200:#f9cfcd; --color-accent-300:#f1a5a1;
-  --color-accent-400:#e6716b; --color-accent-500:#d8231c; --color-accent-600:#b81c16;
-  --color-accent-700:#941410; --color-accent-800:#6d0d0a; --color-accent-900:#470807;
-  --color-bg:#f3f2f2; --color-surface:#e9e9ea; --color-text:#1f2124;
-  --font-heading:"Archivo", system-ui, sans-serif;
-  --font-body:"Barlow", system-ui, sans-serif;
-  --font-heading-weight:600;
-  --wp-steel:#7f878c;
+:root {
+  --color-accent: #d8231c; 
+  --color-accent-2: #d8231c;
+  --color-accent-100: #fdeceb; 
+  --color-accent-200: #f9cfcd; 
+  --color-accent-300: #f1a5a1;
+  --color-accent-400: #e6716b; 
+  --color-accent-500: #d8231c; 
+  --color-accent-600: #b81c16;
+  --color-accent-700: #941410; 
+  --color-accent-800: #6d0d0a; 
+  --color-accent-900: #470807;
+  --color-bg: #f3f2f2; 
+  --color-surface: #e9e9ea; 
+  --color-text: #1f2124;
+  --color-divider: #e0e0e0;
+  --font-heading: Arial, Helvetica, sans-serif;
+  --font-body: Arial, Helvetica, sans-serif;
+  --font-heading-weight: 600;
+  --wp-steel: #7f878c;
 }
-body{font-size:15px; margin: 0; background: var(--color-bg); font-family: var(--font-body); color: var(--color-text);}
-h1,h2,h3,h4,h5,h6{letter-spacing:-0.01em}
-a{color:var(--color-accent-700);text-decoration:none}
-a:hover{color:var(--color-accent);text-decoration:underline}
-.wp-num{font-variant-numeric:tabular-nums}
 
-* { box-sizing: border-box; }
+[data-theme='dark'] {
+  --color-bg: #121212;
+  --color-surface: #1e1e1e;
+  --color-text: #e0e0e0;
+  --color-divider: #333333;
+  --color-neutral-400: #555555;
+  --color-neutral-600: #888888;
+  --color-neutral-700: #aaaaaa;
+  --color-neutral-800: #cccccc;
+  --color-neutral-900: #e0e0e0;
+  --color-accent-100: #2d0b0a;
+  --color-accent-700: #f1a5a1; /* Lighter accent for links in dark mode */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-bg: #121212;
+    --color-surface: #1e1e1e;
+    --color-text: #e0e0e0;
+    --color-divider: #333333;
+    --color-neutral-400: #555555;
+    --color-neutral-600: #888888;
+    --color-neutral-700: #aaaaaa;
+    --color-neutral-800: #cccccc;
+    --color-neutral-900: #e0e0e0;
+    --color-accent-100: #2d0b0a;
+    --color-accent-700: #f1a5a1;
+  }
+}
+
+* { 
+  box-sizing: border-box; 
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-style: normal !important;
+}
+
+body {
+  font-size: 15px; 
+  margin: 0; 
+  background: var(--color-bg) !important; 
+  color: var(--color-text) !important;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.01em;
+}
+
+a {
+  color: var(--color-accent-700);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+.wp-num {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Ensure background of components adapts */
+.card, .table, aside, header, section {
+  background: transparent;
+}
+.card > div:first-child, .card > a:first-child {
+  background: var(--color-bg) !important;
+}
+[style*="background: #fff"], 
+[style*="background:#fff"], 
+[style*="background-color: #fff"], 
+[style*="background-color:#fff"] {
+  background: var(--color-surface) !important;
+}
+[style*="border-bottom: 1px solid var(--color-divider)"],
+[style*="border: 1px solid var(--color-divider)"] {
+  border-color: var(--color-divider) !important;
+}

@@ -11,11 +11,9 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="es">
+    <html lang="es" suppressHydrationWarning>
       <head>
         <link rel="stylesheet" href="/_ds/classical-fe2ab21a-edfa-48c3-b630-599a553acd19/styles.css" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Barlow:wght@400;500;600&display=swap" />
       </head>
       <body>
         <StoreProvider>

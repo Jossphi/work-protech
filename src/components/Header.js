@@ -4,11 +4,31 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useStore } from "@/context/StoreContext";
 import { CATS } from "@/data/storeData";
+import { useEffect, useState } from "react";
 
 export default function Header() {
   const router = useRouter();
   const { cart, query, setQuery } = useStore();
   const cartCount = cart.reduce((n, l) => n + l.qty, 0);
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    // Check initial preference
+    if (document.documentElement.getAttribute('data-theme') === 'dark' || 
+       (!document.documentElement.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      setIsDark(true);
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      setIsDark(false);
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = !isDark;
+    setIsDark(newTheme);
+    document.documentElement.setAttribute('data-theme', newTheme ? 'dark' : 'light');
+  };
 
   const goSearch = () => {
     if (query.trim()) {
@@ -33,20 +53,20 @@ export default function Header() {
         </div>
       </div>
 
-      <header style={{ background: "#fff", borderBottom: "1px solid var(--color-divider)" }}>
+      <header style={{ background: "var(--color-surface)", borderBottom: "1px solid var(--color-divider)", transition: "background 0.3s ease" }}>
         <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "14px 20px", display: "flex", alignItems: "center", gap: "24px", flexWrap: "wrap" }}>
-          <Link href="/" style={{ display: "block", flex: "0 0 auto" }}>
+          <Link href="/" style={{ display: "block", flex: "0 0 auto", background: "#fff", borderRadius: "var(--radius-sm)", padding: "2px 6px" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/img/logo-wp.png" alt="Work Protech" style={{ height: "40px", width: "auto" }} />
           </Link>
-          <div style={{ flex: "1 1 320px", minWidth: "220px", display: "flex", border: "1px solid var(--color-neutral-400)", borderRadius: "var(--radius-md)", overflow: "hidden", background: "#fff" }}>
+          <div style={{ flex: "1 1 320px", minWidth: "220px", display: "flex", border: "1px solid var(--color-neutral-400)", borderRadius: "var(--radius-md)", overflow: "hidden", background: "var(--color-bg)" }}>
             <input 
               className="input" 
               placeholder="Buscar EPP: botas S3, guantes nitrilo, chaleco..." 
               value={query} 
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleKeyDown}
-              style={{ flex: 1, border: 0, borderRadius: 0, fontSize: "14px" }} 
+              style={{ flex: 1, border: 0, borderRadius: 0, fontSize: "14px", color: "var(--color-text)" }} 
             />
             <button 
               className="btn" 
@@ -57,6 +77,9 @@ export default function Header() {
             </button>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <button onClick={toggleTheme} className="btn btn-ghost" style={{ fontSize: "16px", padding: "8px" }} title="Alternar modo oscuro">
+              {isDark ? '☀️' : '🌙'}
+            </button>
             <Link href="/quote" className="btn btn-ghost" style={{ fontSize: "13px" }}>Cotización</Link>
             <Link href="/cart" className="btn btn-primary" style={{ fontSize: "13px" }}>
               Carrito · <span className="wp-num">{cartCount}</span>
@@ -69,7 +92,7 @@ export default function Header() {
               <Link 
                 key={cat.id} 
                 href={`/catalog?cat=${cat.id}`} 
-                style={{ padding: "10px 0", fontSize: "13.5px", fontWeight: 500, letterSpacing: "0.05em", textTransform: "uppercase", color: "var(--color-neutral-800)", borderBottom: "2px solid transparent" }}
+                style={{ padding: "10px 0", fontSize: "13.5px", fontWeight: 500, letterSpacing: "0.05em", textTransform: "uppercase", color: "var(--color-neutral-800)", borderBottom: "2px solid transparent", transition: "color 0.2s" }}
                 onMouseEnter={(e) => { e.currentTarget.style.color = "var(--color-accent)"; e.currentTarget.style.borderBottomColor = "var(--color-accent)"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.color = "var(--color-neutral-800)"; e.currentTarget.style.borderBottomColor = "transparent"; }}
               >
