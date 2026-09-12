@@ -4,31 +4,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useStore } from "@/context/StoreContext";
 import { CATS } from "@/data/storeData";
-import { useEffect, useState } from "react";
 
 export default function Header() {
   const router = useRouter();
   const { cart, query, setQuery } = useStore();
   const cartCount = cart.reduce((n, l) => n + l.qty, 0);
-  const [isDark, setIsDark] = useState(false);
-
-  useEffect(() => {
-    // Check initial preference
-    if (document.documentElement.getAttribute('data-theme') === 'dark' || 
-       (!document.documentElement.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      setIsDark(true);
-      document.documentElement.setAttribute('data-theme', 'dark');
-    } else {
-      setIsDark(false);
-      document.documentElement.setAttribute('data-theme', 'light');
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    const newTheme = !isDark;
-    setIsDark(newTheme);
-    document.documentElement.setAttribute('data-theme', newTheme ? 'dark' : 'light');
-  };
 
   const goSearch = () => {
     if (query.trim()) {
@@ -77,9 +57,6 @@ export default function Header() {
             </button>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <button onClick={toggleTheme} className="btn btn-ghost" style={{ fontSize: "16px", padding: "8px" }} title="Alternar modo oscuro">
-              {isDark ? '☀️' : '🌙'}
-            </button>
             <Link href="/quote" className="btn btn-ghost" style={{ fontSize: "13px" }}>Cotización</Link>
             <Link href="/cart" className="btn btn-primary" style={{ fontSize: "13px" }}>
               Carrito · <span className="wp-num">{cartCount}</span>
