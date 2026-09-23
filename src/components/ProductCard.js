@@ -1,19 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useStore } from "@/context/StoreContext";
 import { CATS } from "@/data/storeData";
 
 export default function ProductCard({ product }) {
-  const { addToCart } = useStore();
   const catLabel = CATS.find(c => c.id === product.cat)?.label || "";
-
-  const handleAdd = (e) => {
-    e.preventDefault();
-    addToCart(product.id, null, 1);
-  };
-
-  const formattedPrice = `S/ ${product.price.toFixed(2)}`;
 
   return (
     <div 
@@ -40,15 +31,16 @@ export default function ProductCard({ product }) {
           {product.name}
         </Link>
         <div style={{ fontSize: "12.5px", color: "var(--color-neutral-700)" }}>{product.norm}</div>
-        <div style={{ marginTop: "auto", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px", paddingTop: "8px" }}>
-          <span className="wp-num" style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: "19px" }}>{formattedPrice}</span>
-          <button 
+        <div style={{ marginTop: "auto", display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "10px", paddingTop: "8px" }}>
+          <a 
             className="btn btn-primary" 
-            onClick={handleAdd} 
-            style={{ fontSize: "12px", padding: "7px 12px", letterSpacing: "0.05em", textTransform: "uppercase" }}
+            href={`https://wa.me/51984108672?text=${encodeURIComponent('Hola, me interesa el producto: ' + product.name)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ fontSize: "12px", padding: "7px 12px", letterSpacing: "0.05em", textTransform: "uppercase", textDecoration: "none" }}
           >
-            Agregar
-          </button>
+            Comprar
+          </a>
         </div>
       </div>
     </div>

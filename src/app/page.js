@@ -53,7 +53,7 @@ export default function Home() {
           </div>
           <div style={{ display: "flex", gap: "12px", alignItems: "flex-start" }}>
             <div style={{ width: "3px", background: "var(--color-accent)", alignSelf: "stretch" }}></div>
-            <div><div style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: "14.5px" }}>Precios por volumen</div><div style={{ fontSize: "13px", color: "var(--color-neutral-700)" }}>Escalas desde 12 unidades</div></div>
+            <div><div style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: "14.5px" }}>Ventas por volumen</div><div style={{ fontSize: "13px", color: "var(--color-neutral-700)" }}>Atención a empresas</div></div>
           </div>
           <div style={{ display: "flex", gap: "12px", alignItems: "flex-start" }}>
             <div style={{ width: "3px", background: "var(--color-accent)", alignSelf: "stretch" }}></div>
@@ -92,7 +92,6 @@ export default function Home() {
       <section style={{ maxWidth: "1240px", margin: "0 auto", padding: "44px 20px 16px" }}>
         <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "16px", flexWrap: "wrap" }}>
           <h2 style={{ fontSize: "30px", margin: 0 }}>Más vendidos</h2>
-          <span style={{ fontSize: "13px", color: "var(--color-neutral-700)" }}>Precios incluyen IGV</span>
         </div>
         <hr className="hr" />
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(235px,1fr))", gap: "18px" }}>

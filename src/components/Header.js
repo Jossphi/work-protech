@@ -7,8 +7,7 @@ import { CATS } from "@/data/storeData";
 
 export default function Header() {
   const router = useRouter();
-  const { cart, query, setQuery } = useStore();
-  const cartCount = cart.reduce((n, l) => n + l.qty, 0);
+  const { query, setQuery } = useStore();
 
   const goSearch = () => {
     if (query.trim()) {
@@ -58,9 +57,6 @@ export default function Header() {
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <Link href="/quote" className="btn btn-ghost" style={{ fontSize: "13px" }}>Cotización</Link>
-            <Link href="/cart" className="btn btn-primary" style={{ fontSize: "13px" }}>
-              Carrito · <span className="wp-num">{cartCount}</span>
-            </Link>
           </div>
         </div>
         <nav style={{ borderTop: "1px solid var(--color-divider)" }}>
