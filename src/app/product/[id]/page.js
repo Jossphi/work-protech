@@ -19,6 +19,8 @@ export default function ProductDetail({ params }) {
     return <div style={{ padding: "40px", textAlign: "center" }}>Producto no encontrado. <Link href="/catalog">Volver al catálogo</Link></div>;
   }
 
+  const showStock = true;
+
   const related = PRODUCTS.filter(x => x.cat === p.cat && x.id !== p.id)
     .concat(PRODUCTS.filter(x => x.cat !== p.cat))
     .slice(0, 4);
