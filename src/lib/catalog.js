@@ -16,20 +16,55 @@ export function sortSizes(sizes) {
   });
 }
 
+// Familias de EPP (categorías raíz) con sus subcategorías y número de productos.
 export const getCategories = cache(async () => {
   const sql = db();
-  return sql`
-    SELECT c.slug, c.name, c.kicker, c.banner_url,
-           count(p.id)::int AS product_count
+  const rows = await sql`
+    SELECT c.id, c.slug, c.name, c.kicker, c.image_url, c.parent_id,
+           count(p.id)::int AS own_count
     FROM categories c
     LEFT JOIN products p ON p.category_id = c.id AND p.active
     WHERE c.active
     GROUP BY c.id
     ORDER BY c.sort_order, c.name`;
+  const families = rows
+    .filter((r) => !r.parent_id)
+    .map((f) => {
+      const children = rows
+        .filter((r) => r.parent_id === f.id)
+        .map(({ slug, name, kicker, own_count }) => ({ slug, name, kicker, product_count: own_count }));
+      return {
+        slug: f.slug,
+        name: f.name,
+        kicker: f.kicker,
+        image_url: f.image_url,
+        children,
+        product_count: f.own_count + children.reduce((n, c) => n + c.product_count, 0),
+      };
+    });
+  return families;
+});
+
+// Busca una familia o subcategoría por slug.
+export function findCategory(families, slug) {
+  for (const f of families) {
+    if (f.slug === slug) return { ...f, family: f };
+    const child = f.children.find((c) => c.slug === slug);
+    if (child) return { ...child, family: f };
+  }
+  return null;
+}
+
+export const getBrands = cache(async () => {
+  const sql = db();
+  return sql`
+    SELECT b.slug, b.name, count(p.id)::int AS product_count
+    FROM brands b LEFT JOIN products p ON p.brand_id = b.id AND p.active
+    GROUP BY b.id ORDER BY b.name`;
 });
 
 // Listado de productos para tarjetas (catálogo, inicio, relacionados).
-export const getProducts = cache(async ({ category = null, q = null, featured = false, limit = 200 } = {}) => {
+export const getProducts = cache(async ({ category = null, brand = null, q = null, featured = false, limit = 200 } = {}) => {
   const sql = db();
   // Cada palabra buscada debe coincidir con el inicio de alguna palabra (sin tildes).
   const words = q
@@ -44,14 +79,16 @@ export const getProducts = cache(async ({ category = null, q = null, featured = 
     FROM products p
     LEFT JOIN brands b ON b.id = p.brand_id
     LEFT JOIN categories c ON c.id = p.category_id
+    LEFT JOIN categories fam ON fam.id = c.parent_id
     WHERE p.active
-      AND (${category}::text IS NULL OR c.slug = ${category})
+      AND (${category}::text IS NULL OR c.slug = ${category} OR fam.slug = ${category})
+      AND (${brand}::text IS NULL OR b.slug = ${brand})
       AND (${featured}::boolean = false OR p.featured)
       AND (${words}::text[] IS NULL OR NOT EXISTS (
             SELECT 1 FROM unnest(${words}::text[]) AS w
             WHERE unaccent_lower(p.name || ' ' || coalesce(p.code, '') || ' ' || coalesce(p.product_type, '') || ' ' || coalesce(p.norm, '') || ' ' || coalesce(c.name, ''))
                   !~ ('\\m' || unaccent_lower(w))))
-    ORDER BY c.sort_order, p.sort_order
+    ORDER BY fam.sort_order NULLS FIRST, c.sort_order, p.sort_order
     LIMIT ${limit}`;
 });
 
@@ -60,10 +97,12 @@ export const getProduct = cache(async (slug) => {
   const rows = await sql`
     SELECT p.id, p.slug, p.code, p.name, p.product_type, p.norm, p.description,
            p.variant_label, p.size_chart,
-           b.name AS brand, c.slug AS category, c.name AS category_name
+           b.name AS brand, c.slug AS category, c.name AS category_name,
+           fam.slug AS family, fam.name AS family_name
     FROM products p
     LEFT JOIN brands b ON b.id = p.brand_id
     LEFT JOIN categories c ON c.id = p.category_id
+    LEFT JOIN categories fam ON fam.id = c.parent_id
     WHERE p.slug = ${slug} AND p.active`;
   const product = rows[0];
   if (!product) return null;

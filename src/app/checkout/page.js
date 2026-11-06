@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useStore } from "@/context/StoreContext";
+import { IconWhatsapp } from "@/components/Icons";
 
 const EMPTY = { name: "", documentType: "DNI", documentId: "", phone: "", email: "", address: "", notes: "" };
 
@@ -83,11 +84,11 @@ export default function Checkout() {
             Estamos abriendo WhatsApp con el detalle de tu pedido. Solo pulsa <strong>Enviar</strong> en el chat para que nos llegue.
             Si WhatsApp no se abrió, usa el botón:
           </p>
-          <a href={status.whatsappUrl} className="btn-solid btn-whatsapp" target="_blank" rel="noopener noreferrer" style={{ marginTop: 10 }}>
-            Enviar pedido por WhatsApp
+          <a href={status.whatsappUrl} className="btn-solid" target="_blank" rel="noopener noreferrer" style={{ marginTop: 10 }}>
+            <IconWhatsapp size={18} /> Enviar pedido por WhatsApp
           </a>
           <div style={{ marginTop: 18 }}>
-            <Link href="/catalog">Volver al catálogo</Link>
+            <Link href="/catalog">Volver a productos</Link>
           </div>
         </div>
       </section>
@@ -173,8 +174,8 @@ export default function Checkout() {
 
           {status.state === "error" && <div className="error-box" style={{ marginTop: 16 }}>{status.message}</div>}
 
-          <button type="submit" className="btn-solid btn-whatsapp btn-block" style={{ marginTop: 20 }} disabled={sending}>
-            {sending ? "Enviando…" : "Enviar pedido por WhatsApp"}
+          <button type="submit" className="btn-solid btn-block" style={{ marginTop: 20 }} disabled={sending}>
+            <IconWhatsapp size={18} /> {sending ? "Enviando…" : "Enviar pedido por WhatsApp"}
           </button>
           <p className="muted" style={{ fontSize: 12.5, marginTop: 10, lineHeight: 1.5 }}>
             Al enviar, guardamos tu pedido y se abre WhatsApp con el detalle listo para mandar a Work Protech.

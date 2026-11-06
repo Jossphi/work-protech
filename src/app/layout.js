@@ -1,5 +1,8 @@
-import { Suspense } from "react";
-import Script from "next/script";
+import "@fontsource/montserrat/400.css";
+import "@fontsource/montserrat/500.css";
+import "@fontsource/montserrat/600.css";
+import "@fontsource/montserrat/700.css";
+import "@fontsource/montserrat/800.css";
 import { StoreProvider } from "@/context/StoreContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -10,31 +13,25 @@ export const revalidate = 300;
 
 export const metadata = {
   title: {
-    default: "Work Protech | Ropa de trabajo Paredes Seguridad",
+    default: "Work Protech | EPP de alta calidad · Protección real para cada industria",
     template: "%s | Work Protech",
   },
   description:
-    "Ropa de trabajo Paredes Seguridad: camisetas, polos, sudaderas, polares, softshell, parkas, chalecos y pantalones. Arma tu pedido y envíalo por WhatsApp.",
+    "Equipos de protección personal y vestuario de trabajo para minería, industria, construcción, agroindustria y logística. Arma tu pedido y solicita tu cotización por WhatsApp.",
 };
 
 export default async function RootLayout({ children }) {
-  const categories = await getCategories();
+  const families = await getCategories();
   return (
-    <html lang="es" suppressHydrationWarning>
-      <head>
-        <link rel="stylesheet" href="/_ds/classical-fe2ab21a-edfa-48c3-b630-599a553acd19/styles.css" />
-      </head>
+    <html lang="es">
       <body>
         <StoreProvider>
           <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
-            <Suspense fallback={null}>
-              <Header categories={categories} />
-            </Suspense>
+            <Header />
             <main style={{ flex: 1 }}>{children}</main>
-            <Footer categories={categories} />
+            <Footer families={families} />
           </div>
         </StoreProvider>
-        <Script src="/_ds/classical-fe2ab21a-edfa-48c3-b630-599a553acd19/_ds_bundle.js" strategy="beforeInteractive" />
       </body>
     </html>
   );

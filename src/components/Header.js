@@ -1,41 +1,35 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useStore } from "@/context/StoreContext";
+import { CONTACT, NAV, TAGLINE } from "@/lib/config";
+import { IconClose, IconDoc, IconMail, IconMenu, IconPhone, IconPin, IconSearch, IconArrow } from "@/components/Icons";
 
-function CartIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <circle cx="9" cy="21" r="1" />
-      <circle cx="20" cy="21" r="1" />
-      <path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6" />
-    </svg>
-  );
+const noopSubscribe = () => () => {};
+
+function isActive(pathname, href) {
+  if (href === "/") return pathname === "/";
+  if (href === "/catalog") return pathname.startsWith("/catalog") || pathname.startsWith("/product");
+  return pathname.startsWith(href);
 }
 
-export function CartButton({ className = "cart-link", label = "Carrito" }) {
-  const { count, loaded } = useStore();
-  return (
-    <Link href="/cart" className={className} aria-label={`${label} (${count} productos)`}>
-      <CartIcon />
-      <span>{label}</span>
-      {loaded && count > 0 && <span className="cart-badge wp-num">{count}</span>}
-    </Link>
-  );
-}
-
-export default function Header({ categories = [] }) {
+export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
-  const params = useSearchParams();
-  const [query, setQuery] = useState(params.get("q") || "");
-  const activeCat = pathname === "/catalog" ? params.get("cat") : null;
+  const { count: storedCount, loaded } = useStore();
+  // El contador sale de localStorage: no se muestra hasta que la cabecera está hidratada.
+  const hydrated = useSyncExternalStore(noopSubscribe, () => true, () => false);
+  const count = hydrated ? storedCount : 0;
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [query, setQuery] = useState("");
 
-  const onSubmit = (e) => {
+  const onSearch = (e) => {
     e.preventDefault();
     const q = query.trim();
+    setSearchOpen(false);
     router.push(q ? `/catalog?q=${encodeURIComponent(q)}` : "/catalog");
   };
 
@@ -43,38 +37,64 @@ export default function Header({ categories = [] }) {
     <>
       <div className="topbar">
         <div className="wrap">
-          <span>Distribuidor oficial Paredes Seguridad · Despacho a todo el Perú</span>
-          <span>ventas@workprotech.com · +51 936 628 362</span>
+          <div className="items">
+            <a className="item" href={CONTACT.phoneHref}><IconPhone size={15} />{CONTACT.phone}</a>
+            <a className="item" href={`mailto:${CONTACT.email}`}><IconMail size={15} />{CONTACT.email}</a>
+            <span className="item hide-sm"><IconPin size={15} />{CONTACT.city}</span>
+          </div>
         </div>
       </div>
       <header className="site-header">
         <div className="wrap bar">
-          <Link href="/" className="logo" aria-label="Work Protech, inicio">
+          <Link href="/" className="brand-logo" aria-label="Work Protech, inicio" onClick={() => setMenuOpen(false)}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/img/logo-wp.png" alt="Work Protech" />
+            <img src="/img/marca/logo-work-protech.png" alt="Work Protech" width="225" height="44" />
+            <span className="tag">{TAGLINE}</span>
           </Link>
-          <form className="search" role="search" onSubmit={onSubmit}>
-            <input
-              type="search"
-              placeholder="Buscar: polo, softshell, pantalón multibolsillos…"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              aria-label="Buscar productos"
-            />
-            <button type="submit">Buscar</button>
-          </form>
-          <CartButton />
-        </div>
-        <nav className="catnav" aria-label="Categorías">
-          <div className="wrap">
-            <Link href="/catalog" className={pathname === "/catalog" && !activeCat ? "active" : ""}>Todo</Link>
-            {categories.map((c) => (
-              <Link key={c.slug} href={`/catalog?cat=${c.slug}`} className={activeCat === c.slug ? "active" : ""}>
-                {c.name}
+
+          <nav className={`mainnav ${menuOpen ? "open" : ""}`} aria-label="Navegación principal">
+            {NAV.map((n) => (
+              <Link
+                key={n.href}
+                href={n.href}
+                className={isActive(pathname, n.href) ? "active" : ""}
+                aria-current={isActive(pathname, n.href) ? "page" : undefined}
+                onClick={() => setMenuOpen(false)}
+              >
+                {n.label}
               </Link>
             ))}
+          </nav>
+
+          <div className="header-actions">
+            <button type="button" className="icon-btn" aria-label="Buscar" aria-expanded={searchOpen} onClick={() => { setSearchOpen((v) => !v); setMenuOpen(false); }}>
+              <IconSearch />
+            </button>
+            <Link href="/cart" className="cta-quote" aria-label={`Solicitar cotización (${count} productos)`} onClick={() => setMenuOpen(false)}>
+              <IconDoc size={18} />
+              <span className="txt">Solicitar <span className="txt-long">cotización</span></span>
+              {hydrated && loaded && count > 0 ? <span className="badge wp-num">{count}</span> : <IconArrow size={16} />}
+            </Link>
+            <button type="button" className="icon-btn menu-toggle" aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"} aria-expanded={menuOpen} onClick={() => { setMenuOpen((v) => !v); setSearchOpen(false); }}>
+              {menuOpen ? <IconClose /> : <IconMenu />}
+            </button>
           </div>
-        </nav>
+        </div>
+        {searchOpen && (
+          <div className="search-pop">
+            <form className="wrap" role="search" onSubmit={onSearch}>
+              <input
+                autoFocus
+                type="search"
+                placeholder="Buscar productos: polo, softshell, pantalón multibolsillos…"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                aria-label="Buscar productos"
+              />
+              <button type="submit" className="btn-solid">Buscar</button>
+            </form>
+          </div>
+        )}
       </header>
     </>
   );

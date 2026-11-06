@@ -1,7 +1,7 @@
 -- Esquema de la base de datos de Work Protech (Neon Postgres)
 -- E-commerce sin precios: el carrito se envía como pedido por WhatsApp.
 
--- Categorías (admite subcategorías mediante parent_id)
+-- Categorías: familias de EPP (raíz) y subcategorías mediante parent_id
 CREATE TABLE IF NOT EXISTS categories (
   id          SERIAL PRIMARY KEY,
   slug        TEXT NOT NULL UNIQUE,
@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS categories (
   description TEXT,
   parent_id   INTEGER REFERENCES categories(id) ON DELETE SET NULL,
   banner_url  TEXT,
+  image_url   TEXT,           -- foto de la familia (franja de familias de la portada)
   sort_order  INTEGER NOT NULL DEFAULT 0,
   active      BOOLEAN NOT NULL DEFAULT TRUE,
   created_at  TIMESTAMPTZ NOT NULL DEFAULT now()

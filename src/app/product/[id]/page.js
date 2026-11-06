@@ -31,7 +31,8 @@ export default async function ProductPage({ params }) {
   return (
     <section className="wrap" style={{ paddingTop: 30, paddingBottom: 60 }}>
       <div className="breadcrumb">
-        <Link href="/">Inicio</Link> / <Link href="/catalog">Catálogo</Link> /{" "}
+        <Link href="/">Inicio</Link> / <Link href="/catalog">Productos</Link> /{" "}
+        {p.family && <><Link href={`/catalog?cat=${p.family}`}>{p.family_name}</Link> /{" "}</>}
         <Link href={`/catalog?cat=${p.category}`}>{p.category_name}</Link> / {p.name}
       </div>
 
