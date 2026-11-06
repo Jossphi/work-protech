@@ -1,78 +1,205 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useStore } from "@/context/StoreContext";
-import { PRODUCTS } from "@/data/storeData";
+
+const EMPTY = { name: "", documentType: "DNI", documentId: "", phone: "", email: "", address: "", notes: "" };
+
+function Field({ id, label, required, error, children }) {
+  return (
+    <div className="fld">
+      <label htmlFor={id}>
+        {label} {required && <span className="req">*</span>}
+      </label>
+      {children}
+      {error && <div className="err" id={`${id}-err`}>{error}</div>}
+    </div>
+  );
+}
 
 export default function Checkout() {
-  const { cart, clearCart } = useStore();
-  const [orderPlaced, setOrderPlaced] = useState(false);
+  const { cart, count, loaded, clearCart } = useStore();
+  const [form, setForm] = useState(EMPTY);
+  const [website, setWebsite] = useState("");
+  const [errors, setErrors] = useState({});
+  const [status, setStatus] = useState({ state: "idle" });
 
-  const cartLines = cart.map(l => {
-    const prod = PRODUCTS.find(x => x.id === l.id);
-    return {
-      name: prod.name,
-      qty: l.qty,
-      total: prod.price * l.qty,
-    };
-  });
-
-  const sub = cartLines.reduce((acc, l) => acc + l.total, 0);
-  const fmt = (n) => `S/ ${n.toFixed(2)}`;
-
-  const handlePlaceOrder = () => {
-    setOrderPlaced(true);
-    clearCart();
+  const set = (k) => (e) => {
+    setForm((f) => ({ ...f, [k]: e.target.value }));
+    if (errors[k]) setErrors((er) => ({ ...er, [k]: undefined }));
   };
 
-  return (
-    <section style={{ maxWidth: "1000px", margin: "0 auto", padding: "34px 20px 60px" }}>
-      <h2 style={{ fontSize: "32px", margin: 0 }}>Finalizar pedido</h2>
-      <hr className="hr" />
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(290px,1fr))", gap: "28px", alignItems: "start" }}>
-        <div style={{ background: "#fff", border: "1px solid var(--color-divider)", borderRadius: "var(--radius-md)", padding: "24px", display: "flex", flexDirection: "column", gap: "14px" }}>
-          <div style={{ fontSize: "12px", letterSpacing: "0.12em", textTransform: "uppercase", fontWeight: 600, color: "var(--color-neutral-700)" }}>Datos de facturación</div>
-          <div className="field"><label>Razón social o nombre</label><input className="input" placeholder="Constructora Andina S.A.C." /></div>
-          <div className="field"><label>RUC / DNI</label><input className="input" placeholder="20615339637" /></div>
-          <div className="field"><label>Correo</label><input className="input" placeholder="compras@empresa.com" /></div>
-          <div className="field"><label>Dirección de entrega</label><input className="input" placeholder="Av. Argentina 2020, Callao" /></div>
-          <div className="field"><label>Orden de compra (opcional)</label><input className="input" placeholder="OC-2026-0142" /></div>
+  const validate = () => {
+    const er = {};
+    if (form.name.trim().length < 3) er.name = "Escribe tu nombre completo.";
+    const doc = form.documentId.trim();
+    if (form.documentType === "DNI" && !/^\d{8}$/.test(doc)) er.documentId = "El DNI debe tener 8 dígitos.";
+    else if (form.documentType !== "DNI" && !/^[A-Za-z0-9-]{5,20}$/.test(doc)) er.documentId = "Número de documento no válido.";
+    if (form.phone.replace(/\D/g, "").length < 7) er.phone = "Escribe un número de teléfono válido.";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) er.email = "Escribe un correo válido.";
+    if (form.address.trim().length < 5) er.address = "Escribe tu dirección.";
+    setErrors(er);
+    return Object.keys(er).length === 0;
+  };
+
+  const submit = async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+    setStatus({ state: "sending" });
+    try {
+      const res = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customer: form,
+          website,
+          items: cart.map((l) => ({ slug: l.slug, color: l.color, size: l.size, qty: l.qty })),
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        if (data.fields) setErrors(data.fields);
+        setStatus({ state: "error", message: data.error || "No se pudo registrar el pedido. Inténtalo de nuevo." });
+        return;
+      }
+      clearCart();
+      setStatus({ state: "done", orderNumber: data.orderNumber, whatsappUrl: data.whatsappUrl });
+      window.location.href = data.whatsappUrl;
+    } catch {
+      setStatus({ state: "error", message: "No hay conexión. Revisa tu internet e inténtalo de nuevo." });
+    }
+  };
+
+  if (!loaded) return <section className="wrap" style={{ padding: "40px 20px" }} />;
+
+  if (status.state === "done") {
+    return (
+      <section className="wrap" style={{ paddingTop: 40, paddingBottom: 60, maxWidth: 720 }}>
+        <div className="panel" style={{ padding: 36, textAlign: "center" }}>
+          <div className="eyebrow">Pedido registrado</div>
+          <h1 style={{ fontSize: 30, margin: "10px 0" }}>¡Gracias! Tu pedido es el <span className="wp-num">{status.orderNumber}</span></h1>
+          <p className="muted" style={{ fontSize: 15.5, lineHeight: 1.6 }}>
+            Estamos abriendo WhatsApp con el detalle de tu pedido. Solo pulsa <strong>Enviar</strong> en el chat para que nos llegue.
+            Si WhatsApp no se abrió, usa el botón:
+          </p>
+          <a href={status.whatsappUrl} className="btn-solid btn-whatsapp" target="_blank" rel="noopener noreferrer" style={{ marginTop: 10 }}>
+            Enviar pedido por WhatsApp
+          </a>
+          <div style={{ marginTop: 18 }}>
+            <Link href="/catalog">Volver al catálogo</Link>
+          </div>
         </div>
-        <div style={{ background: "#fff", border: "1px solid var(--color-divider)", borderRadius: "var(--radius-md)", padding: "24px" }}>
-          <div style={{ fontSize: "12px", letterSpacing: "0.12em", textTransform: "uppercase", fontWeight: 600, color: "var(--color-neutral-700)" }}>Tu pedido</div>
-          <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginTop: "14px" }}>
-            {cartLines.map((l, i) => (
-              <div key={i} style={{ display: "flex", justifyContent: "space-between", gap: "12px", fontSize: "14px" }}>
-                <span>{l.name} × <span className="wp-num">{l.qty}</span></span>
-                <span className="wp-num">{fmt(l.total)}</span>
+      </section>
+    );
+  }
+
+  if (cart.length === 0) {
+    return (
+      <section className="wrap" style={{ paddingTop: 30, paddingBottom: 60 }}>
+        <h1 style={{ fontSize: 32, margin: 0 }}>Finalizar compra</h1>
+        <hr className="hr" />
+        <div className="panel" style={{ padding: 44, textAlign: "center" }}>
+          <p className="muted" style={{ fontSize: 16 }}>Tu carrito está vacío.</p>
+          <Link href="/catalog" className="btn-solid">Ir al catálogo</Link>
+        </div>
+      </section>
+    );
+  }
+
+  const sending = status.state === "sending";
+
+  return (
+    <section className="wrap" style={{ paddingTop: 30, paddingBottom: 60 }}>
+      <div className="breadcrumb"><Link href="/cart">Carrito</Link> / Finalizar compra</div>
+      <h1 style={{ fontSize: 32, margin: "8px 0 0" }}>Finalizar compra</h1>
+      <hr className="hr" />
+      <div className="cart-layout">
+        <form className="panel" style={{ padding: 24 }} onSubmit={submit} noValidate>
+          <div className="label" style={{ marginBottom: 16 }}>Tus datos</div>
+          <div className="form-grid">
+            <div className="full">
+              <Field id="name" label="Nombre completo" required error={errors.name}>
+                <input id="name" autoComplete="name" value={form.name} onChange={set("name")} aria-invalid={!!errors.name} />
+              </Field>
+            </div>
+            <Field id="documentId" label="Documento de identidad" required error={errors.documentId || errors.documentType}>
+              <div className="doc-row">
+                <select value={form.documentType} onChange={set("documentType")} aria-label="Tipo de documento">
+                  <option>DNI</option>
+                  <option>Pasaporte</option>
+                  <option>Carné de extranjería</option>
+                </select>
+                <input
+                  id="documentId"
+                  inputMode={form.documentType === "DNI" ? "numeric" : "text"}
+                  maxLength={form.documentType === "DNI" ? 8 : 20}
+                  placeholder={form.documentType === "DNI" ? "8 dígitos" : "Número"}
+                  value={form.documentId}
+                  onChange={set("documentId")}
+                  aria-invalid={!!errors.documentId}
+                />
+              </div>
+            </Field>
+            <Field id="phone" label="Número de teléfono" required error={errors.phone}>
+              <input id="phone" type="tel" autoComplete="tel" placeholder="+51 9XX XXX XXX" value={form.phone} onChange={set("phone")} aria-invalid={!!errors.phone} />
+            </Field>
+            <div className="full">
+              <Field id="email" label="Correo electrónico" required error={errors.email}>
+                <input id="email" type="email" autoComplete="email" value={form.email} onChange={set("email")} aria-invalid={!!errors.email} />
+              </Field>
+            </div>
+            <div className="full">
+              <Field id="address" label="Dirección" required error={errors.address}>
+                <input id="address" autoComplete="street-address" placeholder="Calle, número, distrito, ciudad" value={form.address} onChange={set("address")} aria-invalid={!!errors.address} />
+              </Field>
+            </div>
+            <div className="full">
+              <Field id="notes" label="Comentario (opcional)">
+                <textarea id="notes" placeholder="Ej.: personalización con logo, fecha de entrega, facturar con RUC…" value={form.notes} onChange={set("notes")} maxLength={1000} />
+              </Field>
+            </div>
+            <input
+              type="text"
+              name="website"
+              value={website}
+              onChange={(e) => setWebsite(e.target.value)}
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
+            />
+          </div>
+
+          {status.state === "error" && <div className="error-box" style={{ marginTop: 16 }}>{status.message}</div>}
+
+          <button type="submit" className="btn-solid btn-whatsapp btn-block" style={{ marginTop: 20 }} disabled={sending}>
+            {sending ? "Enviando…" : "Enviar pedido por WhatsApp"}
+          </button>
+          <p className="muted" style={{ fontSize: 12.5, marginTop: 10, lineHeight: 1.5 }}>
+            Al enviar, guardamos tu pedido y se abre WhatsApp con el detalle listo para mandar a Work Protech.
+          </p>
+        </form>
+
+        <aside className="panel" style={{ padding: 24 }}>
+          <div className="label">Tu pedido</div>
+          <div style={{ marginTop: 10 }}>
+            {cart.map((l) => (
+              <div key={l.key} style={{ display: "flex", gap: 10, padding: "10px 0", borderBottom: "1px solid var(--color-divider)" }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={l.image} alt="" style={{ width: 48, height: 48, objectFit: "contain", background: "#fff", border: "1px solid var(--color-divider)", borderRadius: 4 }} />
+                <div style={{ flex: 1, minWidth: 0, fontSize: 13.5 }}>
+                  <div style={{ fontWeight: 700 }}>{l.name}</div>
+                  <div className="muted">{l.color} · Talla {l.size}</div>
+                </div>
+                <div className="wp-num" style={{ fontWeight: 700 }}>×{l.qty}</div>
               </div>
             ))}
           </div>
-          <hr className="hr" />
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-            <span style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: "17px" }}>Total</span>
-            <span className="wp-num" style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: "24px" }}>{fmt(sub)}</span>
-          </div>
-          <button 
-            className="btn" 
-            onClick={handlePlaceOrder}
-            style={{ width: "100%", marginTop: "18px", background: "var(--color-accent)", color: "#fff", border: "1px solid var(--color-accent)", padding: "13px", fontSize: "13.5px", letterSpacing: "0.06em", textTransform: "uppercase" }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = "var(--color-accent-600)"; e.currentTarget.style.borderColor = "var(--color-accent-600)"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = "var(--color-accent)"; e.currentTarget.style.borderColor = "var(--color-accent)"; }}
-          >
-            Confirmar pedido
-          </button>
-          <div style={{ fontSize: "12.5px", color: "var(--color-neutral-700)", marginTop: "12px", lineHeight: 1.5 }}>
-            Te enviaremos la proforma por correo; el despacho se coordina al confirmar el pago o la orden de compra.
-          </div>
-        </div>
+          <div className="summary-line" style={{ marginTop: 10 }}><span>Total de prendas</span><strong className="wp-num">{count}</strong></div>
+          <Link href="/cart" className="btn-outline btn-block" style={{ marginTop: 12 }}>Editar carrito</Link>
+        </aside>
       </div>
-      {orderPlaced && (
-        <div style={{ marginTop: "24px", border: "1px solid var(--color-accent)", background: "var(--color-accent-100)", borderRadius: "var(--radius-md)", padding: "20px 24px" }}>
-          <div style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: "18px" }}>Pedido registrado</div>
-          <div style={{ fontSize: "14.5px", color: "var(--color-neutral-800)" }}>Un asesor de Work Protech te contactará dentro de las próximas 2 horas hábiles.</div>
-        </div>
-      )}
     </section>
   );
 }

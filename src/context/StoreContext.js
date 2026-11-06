@@ -1,86 +1,79 @@
 "use client";
 
-import React, { createContext, useState, useContext, useEffect } from "react";
-import { PRODUCTS } from "@/data/storeData";
+import { createContext, useCallback, useContext, useMemo, useSyncExternalStore } from "react";
 
-const StoreContext = createContext();
+const STORAGE_KEY = "wp_cart_v2";
+const EVENT = "wp-cart-change";
+const StoreContext = createContext(null);
+
+// Carrito guardado en localStorage. Una línea: { key, slug, name, code, color, size, qty, image }
+let cache = { raw: undefined, value: [] };
+
+function read() {
+  let raw = null;
+  try {
+    raw = localStorage.getItem(STORAGE_KEY);
+  } catch {}
+  if (raw !== cache.raw) {
+    let value = [];
+    try {
+      const parsed = JSON.parse(raw || "[]");
+      if (Array.isArray(parsed)) value = parsed;
+    } catch {}
+    cache = { raw, value };
+  }
+  return cache.value;
+}
+
+function write(next) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+  } catch {}
+  window.dispatchEvent(new Event(EVENT));
+}
+
+function subscribe(cb) {
+  const onStorage = (e) => e.key === STORAGE_KEY && cb();
+  window.addEventListener(EVENT, cb);
+  window.addEventListener("storage", onStorage);
+  return () => {
+    window.removeEventListener(EVENT, cb);
+    window.removeEventListener("storage", onStorage);
+  };
+}
+
+const lineKey = (slug, color, size) => `${slug}|${color || ""}|${size || ""}`;
+const update = (fn) => write(fn(read()));
 
 export function StoreProvider({ children }) {
-  const [cart, setCart] = useState([]);
-  const [query, setQuery] = useState("");
+  // En el servidor (y en la primera hidratación) el carrito aún no está cargado.
+  const stored = useSyncExternalStore(subscribe, read, () => null);
+  const loaded = stored !== null;
+  const cart = useMemo(() => stored || [], [stored]);
 
-  // Load cart from local storage on init (optional, but good practice)
-  useEffect(() => {
-    const saved = localStorage.getItem("wp_cart");
-    if (saved) {
-      try {
-        setCart(JSON.parse(saved));
-      } catch (e) {}
-    }
+  const addToCart = useCallback((item, qty = 1) => {
+    const key = lineKey(item.slug, item.color, item.size);
+    update((prev) => {
+      const i = prev.findIndex((l) => l.key === key);
+      if (i >= 0) return prev.map((l, j) => (j === i ? { ...l, qty: l.qty + qty } : l));
+      return [...prev, { ...item, key, qty }];
+    });
   }, []);
 
-  // Save cart to local storage
-  useEffect(() => {
-    localStorage.setItem("wp_cart", JSON.stringify(cart));
-  }, [cart]);
+  const setQty = useCallback((key, qty) => {
+    update((prev) => (qty <= 0 ? prev.filter((l) => l.key !== key) : prev.map((l) => (l.key === key ? { ...l, qty } : l))));
+  }, []);
 
-  const addToCart = (pId, size, qty = 1) => {
-    setCart((prev) => {
-      const newCart = [...prev];
-      const p = PRODUCTS.find((x) => x.id === pId);
-      if (!p) return prev;
-      const sz = size || (p.sizes.length > 1 ? p.sizes[Math.floor(p.sizes.length / 2)] : p.sizes[0]);
-      
-      const index = newCart.findIndex((l) => l.id === pId && l.size === sz);
-      if (index >= 0) {
-        newCart[index] = { ...newCart[index], qty: newCart[index].qty + qty };
-      } else {
-        newCart.push({ id: pId, size: sz, qty: qty });
-      }
-      return newCart;
-    });
-  };
+  const removeFromCart = useCallback((key) => update((prev) => prev.filter((l) => l.key !== key)), []);
+  const clearCart = useCallback(() => write([]), []);
 
-  const updateCartQty = (index, delta) => {
-    setCart((prev) => {
-      const newCart = [...prev];
-      const newQty = newCart[index].qty + delta;
-      if (newQty <= 0) {
-        newCart.splice(index, 1);
-      } else {
-        newCart[index] = { ...newCart[index], qty: newQty };
-      }
-      return newCart;
-    });
-  };
-
-  const removeFromCart = (index) => {
-    setCart((prev) => {
-      const newCart = [...prev];
-      newCart.splice(index, 1);
-      return newCart;
-    });
-  };
-
-  const clearCart = () => setCart([]);
-
-  return (
-    <StoreContext.Provider
-      value={{
-        cart,
-        query,
-        setQuery,
-        addToCart,
-        updateCartQty,
-        removeFromCart,
-        clearCart,
-      }}
-    >
-      {children}
-    </StoreContext.Provider>
-  );
+  const count = useMemo(() => cart.reduce((n, l) => n + l.qty, 0), [cart]);
+  const value = { cart, count, loaded, addToCart, setQty, removeFromCart, clearCart };
+  return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
 }
 
 export function useStore() {
-  return useContext(StoreContext);
+  const ctx = useContext(StoreContext);
+  if (!ctx) throw new Error("useStore debe usarse dentro de StoreProvider");
+  return ctx;
 }

@@ -1,112 +1,62 @@
-"use client";
-
-import { Suspense, useState, useEffect } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import ProductCard from "@/components/ProductCard";
-import { CATS, PRODUCTS } from "@/data/storeData";
+import { getCategories, getProducts } from "@/lib/catalog";
 
-function CatalogContent() {
-  const searchParams = useSearchParams();
-  const initCat = searchParams.get("cat") || "all";
-  const initQ = searchParams.get("q") || "";
-  
-  const [cat, setCat] = useState(initCat);
-  const [brand, setBrand] = useState("all");
+export const metadata = { title: "Catálogo" };
 
-  useEffect(() => {
-    if (searchParams.get("cat")) setCat(searchParams.get("cat"));
-  }, [searchParams]);
+export default async function Catalog({ searchParams }) {
+  const sp = await searchParams;
+  const cat = typeof sp.cat === "string" && sp.cat ? sp.cat : null;
+  const q = typeof sp.q === "string" && sp.q.trim() ? sp.q.trim().slice(0, 80) : null;
 
-  const catLabel = cat === "all" ? "Catálogo completo" : (CATS.find(c => c.id === cat)?.label || "Catálogo");
-  const listTitle = initQ.trim() ? `Resultados para "${initQ.trim()}"` : catLabel;
-
-  const filtered = PRODUCTS.filter(p => 
-    (cat === "all" || p.cat === cat) &&
-    (brand === "all" || p.brand === brand) &&
-    (!initQ || (p.name + ' ' + p.brand + ' ' + p.norm).toLowerCase().includes(initQ.toLowerCase()))
-  );
-
-  const filterCats = [{ id: 'all', label: 'Todas las categorías' }].concat(CATS).map(c => ({
-    id: c.id,
-    label: c.label,
-    color: cat === c.id ? 'var(--color-accent-700)' : 'var(--color-neutral-800)',
-    bg: cat === c.id ? 'var(--color-accent-100)' : 'transparent',
-  }));
-
-  const filterBrands = [
-    { id: 'all', label: 'Todas las marcas' }, 
-    { id: 'Paredes', label: 'Paredes Seguridad' }, 
-    { id: 'Singer Safety', label: 'Singer Safety' }
-  ].map(b => ({
-    id: b.id,
-    label: b.label,
-    color: brand === b.id ? 'var(--color-accent-700)' : 'var(--color-neutral-800)',
-    bg: brand === b.id ? 'var(--color-accent-100)' : 'transparent',
-  }));
+  const [categories, products] = await Promise.all([getCategories(), getProducts({ category: cat, q })]);
+  const current = categories.find((c) => c.slug === cat);
+  const title = q ? `Resultados para “${q}”` : current ? current.name : "Catálogo completo";
+  const total = categories.reduce((n, c) => n + c.product_count, 0);
 
   return (
-    <section style={{ maxWidth: "1240px", margin: "0 auto", padding: "34px 20px 60px" }}>
-      <div style={{ fontSize: "13px", color: "var(--color-neutral-700)" }}>
-        <Link href="/">Inicio</Link> / {listTitle}
+    <section className="wrap" style={{ paddingTop: 30, paddingBottom: 60 }}>
+      <div className="breadcrumb">
+        <Link href="/">Inicio</Link> / {current ? <><Link href="/catalog">Catálogo</Link> / {current.name}</> : "Catálogo"}
       </div>
-      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "16px", flexWrap: "wrap", marginTop: "8px" }}>
-        <h2 style={{ fontSize: "32px", margin: 0 }}>{listTitle}</h2>
-        <span className="wp-num" style={{ fontSize: "13.5px", color: "var(--color-neutral-700)" }}>
-          {filtered.length} {filtered.length === 1 ? 'producto' : 'productos'}
+      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 16, flexWrap: "wrap", marginTop: 8 }}>
+        <h1 style={{ fontSize: 32, margin: 0 }}>{title}</h1>
+        <span className="muted wp-num" style={{ fontSize: 13.5 }}>
+          {products.length} {products.length === 1 ? "producto" : "productos"}
         </span>
       </div>
       <hr className="hr" />
-      <div style={{ display: "grid", gridTemplateColumns: "minmax(0,240px) minmax(0,1fr)", gap: "28px", alignItems: "start" }}>
-        <aside style={{ background: "#fff", border: "1px solid var(--color-divider)", borderRadius: "var(--radius-md)", padding: "20px" }}>
-          <div style={{ fontSize: "12px", letterSpacing: "0.12em", textTransform: "uppercase", fontWeight: 600, color: "var(--color-neutral-700)" }}>Categoría</div>
-          <div style={{ display: "flex", flexDirection: "column", gap: "2px", marginTop: "10px" }}>
-            {filterCats.map(f => (
-              <button 
-                key={f.id}
-                onClick={() => setCat(f.id)}
-                style={{ textAlign: "left", border: 0, fontSize: "14px", padding: "6px 8px", borderRadius: "var(--radius-sm)", color: f.color, background: f.bg, cursor: "pointer" }}
-                onMouseEnter={(e) => { if (cat !== f.id) e.currentTarget.style.background = "var(--color-accent-100)"; }}
-                onMouseLeave={(e) => { if (cat !== f.id) e.currentTarget.style.background = "transparent"; }}
-              >
-                {f.label}
-              </button>
+      <div className="catalog-layout">
+        <aside className="panel filters">
+          <div className="label">Categoría</div>
+          <div className="list" style={{ marginTop: 10 }}>
+            <Link href="/catalog" className={!cat ? "active" : ""}>Todas <span className="muted wp-num">({total})</span></Link>
+            {categories.map((c) => (
+              <Link key={c.slug} href={`/catalog?cat=${c.slug}`} className={cat === c.slug ? "active" : ""}>
+                {c.name} <span className="muted wp-num">({c.product_count})</span>
+              </Link>
             ))}
           </div>
           <hr className="hr" />
-          <div style={{ fontSize: "12px", letterSpacing: "0.12em", textTransform: "uppercase", fontWeight: 600, color: "var(--color-neutral-700)" }}>Marca</div>
-          <div style={{ display: "flex", flexDirection: "column", gap: "2px", marginTop: "10px" }}>
-            {filterBrands.map(b => (
-              <button 
-                key={b.id}
-                onClick={() => setBrand(b.id)}
-                style={{ textAlign: "left", border: 0, fontSize: "14px", padding: "6px 8px", borderRadius: "var(--radius-sm)", color: b.color, background: b.bg, cursor: "pointer" }}
-                onMouseEnter={(e) => { if (brand !== b.id) e.currentTarget.style.background = "var(--color-accent-100)"; }}
-                onMouseLeave={(e) => { if (brand !== b.id) e.currentTarget.style.background = "transparent"; }}
-              >
-                {b.label}
-              </button>
-            ))}
-          </div>
-          <hr className="hr" />
-          <div style={{ fontSize: "13px", color: "var(--color-neutral-700)", lineHeight: 1.5 }}>
+          <div className="muted" style={{ fontSize: 13, lineHeight: 1.5 }}>
             ¿No encuentras un artículo? Escríbenos a <a href="mailto:ventas@workprotech.com">ventas@workprotech.com</a> y lo cotizamos.
           </div>
         </aside>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(230px,1fr))", gap: "18px" }}>
-          {filtered.map(p => (
-            <ProductCard key={p.id} product={p} />
-          ))}
+        <div>
+          {products.length === 0 ? (
+            <div className="panel" style={{ padding: 40, textAlign: "center" }}>
+              <p className="muted">No encontramos productos{q ? ` para “${q}”` : ""}.</p>
+              <Link href="/catalog" className="btn-solid">Ver todo el catálogo</Link>
+            </div>
+          ) : (
+            <div className="product-grid">
+              {products.map((p) => (
+                <ProductCard key={p.slug} product={p} />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </section>
-  );
-}
-
-export default function Catalog() {
-  return (
-    <Suspense fallback={<div style={{ padding: "40px", textAlign: "center" }}>Cargando catálogo...</div>}>
-      <CatalogContent />
-    </Suspense>
   );
 }

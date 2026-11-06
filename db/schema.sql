@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS categories (
   kicker      TEXT,
   description TEXT,
   parent_id   INTEGER REFERENCES categories(id) ON DELETE SET NULL,
+  banner_url  TEXT,
   sort_order  INTEGER NOT NULL DEFAULT 0,
   active      BOOLEAN NOT NULL DEFAULT TRUE,
   created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
@@ -29,11 +30,13 @@ CREATE TABLE IF NOT EXISTS products (
   slug          TEXT NOT NULL UNIQUE,
   code          TEXT,
   name          TEXT NOT NULL,
+  product_type  TEXT,
   brand_id      INTEGER REFERENCES brands(id) ON DELETE SET NULL,
   category_id   INTEGER REFERENCES categories(id) ON DELETE SET NULL,
   norm          TEXT,
   description   TEXT,
   variant_label TEXT NOT NULL DEFAULT 'Talla',
+  size_chart    JSONB,          -- {kind, sizes[], rows:{A:[],B:[],C:[]}} en cm
   featured      BOOLEAN NOT NULL DEFAULT FALSE,
   active        BOOLEAN NOT NULL DEFAULT TRUE,
   sort_order    INTEGER NOT NULL DEFAULT 0,
@@ -90,7 +93,9 @@ CREATE TABLE IF NOT EXISTS orders (
   customer_phone TEXT,
   customer_email TEXT,
   company        TEXT,
+  document_type  TEXT,           -- DNI, Pasaporte, Carné de extranjería
   document_id    TEXT,
+  customer_address TEXT,
   city           TEXT,
   notes          TEXT,
   created_at     TIMESTAMPTZ NOT NULL DEFAULT now(),
@@ -114,3 +119,9 @@ CREATE TABLE IF NOT EXISTS order_items (
   notes        TEXT
 );
 CREATE INDEX IF NOT EXISTS order_items_order_idx ON order_items(order_id);
+
+-- Búsqueda sin tildes
+CREATE EXTENSION IF NOT EXISTS unaccent;
+CREATE OR REPLACE FUNCTION unaccent_lower(text) RETURNS text
+  LANGUAGE sql IMMUTABLE PARALLEL SAFE
+  AS $$ SELECT lower(public.unaccent('public.unaccent'::regdictionary, $1)) $$;

@@ -1,75 +1,76 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useStore } from "@/context/StoreContext";
-import { CATS } from "@/data/storeData";
 
-export default function Header() {
+function CartIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="9" cy="21" r="1" />
+      <circle cx="20" cy="21" r="1" />
+      <path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6" />
+    </svg>
+  );
+}
+
+export function CartButton({ className = "cart-link", label = "Carrito" }) {
+  const { count, loaded } = useStore();
+  return (
+    <Link href="/cart" className={className} aria-label={`${label} (${count} productos)`}>
+      <CartIcon />
+      <span>{label}</span>
+      {loaded && count > 0 && <span className="cart-badge wp-num">{count}</span>}
+    </Link>
+  );
+}
+
+export default function Header({ categories = [] }) {
   const router = useRouter();
-  const { query, setQuery } = useStore();
+  const pathname = usePathname();
+  const params = useSearchParams();
+  const [query, setQuery] = useState(params.get("q") || "");
+  const activeCat = pathname === "/catalog" ? params.get("cat") : null;
 
-  const goSearch = () => {
-    if (query.trim()) {
-      router.push(`/catalog?q=${encodeURIComponent(query)}`);
-    } else {
-      router.push("/catalog");
-    }
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      goSearch();
-    }
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const q = query.trim();
+    router.push(q ? `/catalog?q=${encodeURIComponent(q)}` : "/catalog");
   };
 
   return (
     <>
-      <div style={{ background: "var(--color-accent)", color: "#fff", fontSize: "12.5px", letterSpacing: "0.04em" }}>
-        <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "7px 20px", display: "flex", flexWrap: "wrap", gap: "18px", justifyContent: "space-between" }}>
-          <span>Distribuidor oficial Paredes Seguridad &amp; Singer Safety · Despacho a todo el Perú</span>
+      <div className="topbar">
+        <div className="wrap">
+          <span>Distribuidor oficial Paredes Seguridad · Despacho a todo el Perú</span>
           <span>ventas@workprotech.com · +51 936 628 362</span>
         </div>
       </div>
-
-      <header style={{ background: "var(--color-surface)", borderBottom: "1px solid var(--color-divider)", transition: "background 0.3s ease" }}>
-        <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "14px 20px", display: "flex", alignItems: "center", gap: "24px", flexWrap: "wrap" }}>
-          <Link href="/" style={{ display: "block", flex: "0 0 auto", background: "#fff", borderRadius: "var(--radius-sm)", padding: "2px 6px" }}>
+      <header className="site-header">
+        <div className="wrap bar">
+          <Link href="/" className="logo" aria-label="Work Protech, inicio">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/img/logo-wp.png" alt="Work Protech" style={{ height: "40px", width: "auto" }} />
+            <img src="/img/logo-wp.png" alt="Work Protech" />
           </Link>
-          <div style={{ flex: "1 1 320px", minWidth: "220px", display: "flex", border: "1px solid var(--color-neutral-400)", borderRadius: "var(--radius-md)", overflow: "hidden", background: "var(--color-bg)" }}>
-            <input 
-              className="input" 
-              placeholder="Buscar EPP: botas S3, guantes nitrilo, chaleco..." 
-              value={query} 
+          <form className="search" role="search" onSubmit={onSubmit}>
+            <input
+              type="search"
+              placeholder="Buscar: polo, softshell, pantalón multibolsillos…"
+              value={query}
               onChange={(e) => setQuery(e.target.value)}
-              onKeyDown={handleKeyDown}
-              style={{ flex: 1, border: 0, borderRadius: 0, fontSize: "14px", color: "var(--color-text)" }} 
+              aria-label="Buscar productos"
             />
-            <button 
-              className="btn" 
-              onClick={goSearch} 
-              style={{ border: 0, borderRadius: 0, background: "var(--color-accent)", color: "#fff", padding: "0 18px", fontSize: "13px", letterSpacing: "0.06em", textTransform: "uppercase" }}
-            >
-              Buscar
-            </button>
-          </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <Link href="/quote" className="btn btn-ghost" style={{ fontSize: "13px" }}>Cotización</Link>
-          </div>
+            <button type="submit">Buscar</button>
+          </form>
+          <CartButton />
         </div>
-        <nav style={{ borderTop: "1px solid var(--color-divider)" }}>
-          <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 20px", display: "flex", gap: "0 24px", flexWrap: "wrap" }}>
-            {CATS.map((cat) => (
-              <Link 
-                key={cat.id} 
-                href={`/catalog?cat=${cat.id}`} 
-                style={{ padding: "10px 0", fontSize: "13.5px", fontWeight: 500, letterSpacing: "0.05em", textTransform: "uppercase", color: "var(--color-neutral-800)", borderBottom: "2px solid transparent", transition: "color 0.2s" }}
-                onMouseEnter={(e) => { e.currentTarget.style.color = "var(--color-accent)"; e.currentTarget.style.borderBottomColor = "var(--color-accent)"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.color = "var(--color-neutral-800)"; e.currentTarget.style.borderBottomColor = "transparent"; }}
-              >
-                {cat.label}
+        <nav className="catnav" aria-label="Categorías">
+          <div className="wrap">
+            <Link href="/catalog" className={pathname === "/catalog" && !activeCat ? "active" : ""}>Todo</Link>
+            {categories.map((c) => (
+              <Link key={c.slug} href={`/catalog?cat=${c.slug}`} className={activeCat === c.slug ? "active" : ""}>
+                {c.name}
               </Link>
             ))}
           </div>

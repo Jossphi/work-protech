@@ -1,0 +1,198 @@
+{
+  "source": "Catálogo Paredes Seguridad 26/27 (CATALOGO.pdf)",
+  "brand": { "slug": "paredes-seguridad", "name": "Paredes Seguridad" },
+  "measureLabels": {
+    "top": { "A": "Ancho de pecho", "B": "Largo total", "C": "Largo de manga" },
+    "bottom": { "A": "Ancho de cintura", "B": "Largo" }
+  },
+  "categories": [
+    { "slug": "manga-corta", "name": "Manga corta", "kicker": "Camisetas y polos", "banner": "/img/banners/hero.jpg" },
+    { "slug": "manga-larga", "name": "Manga larga", "kicker": "Camisetas y polos", "banner": "/img/banners/manga-larga.jpg" },
+    { "slug": "sudaderas", "name": "Sudaderas", "kicker": "Cuello redondo y media cremallera", "banner": "/img/banners/sudaderas.jpg" },
+    { "slug": "polar-softshell-parka", "name": "Polar · Softshell · Parka", "kicker": "Abrigo y protección", "banner": "/img/banners/polares.jpg" },
+    { "slug": "chalecos", "name": "Chalecos", "kicker": "Acolchados y softshell", "banner": "/img/banners/chalecos.jpg" },
+    { "slug": "pantalones", "name": "Pantalones", "kicker": "Pantalones y bermudas", "banner": "/img/banners/pantalones.jpg" }
+  ],
+  "products": [
+    {
+      "slug": "gandia", "code": "GANDIA", "name": "Camiseta Gandia", "type": "Camiseta Manga Corta", "category": "manga-corta",
+      "norm": "100% algodón · 160 g · Punto liso",
+      "specs": [["Tipo", "Camiseta manga corta"], ["Corte", "Unisex"], ["Composición", "100% algodón, punto liso"], ["Gramaje", "160 g/m²"], ["Cuello", "Lycra"]],
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+      "colors": [["Granate", false], ["Verde botella", false], ["Marino", true], ["Royal", true], ["Negro", true], ["Gris plomo", false], ["Blanco", true]],
+      "chart": { "kind": "top", "sizes": ["S", "M", "L", "XL", "2XL", "3XL", "4XL"], "rows": { "A": [48, 51, 54, 57, 60, 64, 67], "B": [68, 71, 73, 75, 77, 79, 81] } },
+      "description": "La camiseta GANDIA ha sido diseñada para ofrecer comodidad, resistencia y una imagen profesional durante toda la jornada laboral.\n\nConfeccionada en 100% algodón de 160 g/m², proporciona un tacto suave y una excelente transpirabilidad, convirtiéndose en una prenda ideal para trabajos de uso intensivo.\n\nSu diseño de líneas limpias, con cuello de lycra para una mayor durabilidad y un ajuste confortable, garantiza libertad de movimiento sin renunciar a una apariencia cuidada.\n\nDisponible en una amplia variedad de colores y tallas, se adapta a todo tipo de equipos de trabajo y sectores profesionales, siendo además una excelente opción para personalizar con la imagen corporativa de la empresa.\n\nUna prenda básica, versátil y resistente, pensada para acompañar al profesional en el día a día con la calidad y la confianza que caracterizan a PAREDES SEGURIDAD."
+    },
+    {
+      "slug": "premium", "code": "PREMIUM", "name": "Camiseta Premium", "type": "Camiseta Manga Corta", "category": "manga-corta",
+      "norm": "100% poliéster interlock",
+      "specs": [["Tipo", "Camiseta manga corta técnica"], ["Corte", "Unisex"], ["Composición", "100% poliéster interlock"], ["Prestaciones", "Transpirable, evacúa la humedad y seca rápido"]],
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+      "colors": [["Royal", false], ["Negro", false], ["Blanco", false], ["Marino", false]],
+      "chart": { "kind": "top", "sizes": ["S", "M", "L", "XL", "2XL", "3XL"], "rows": { "A": [50, 52, 54, 57, 60, 63], "B": [70, 72, 74, 76, 78, 80] } },
+      "description": "La camiseta PREMIUM está diseñada para profesionales que necesitan una prenda ligera, resistente y de alto rendimiento durante toda la jornada laboral.\n\nFabricada en 100% poliéster interlock, ofrece una excelente transpirabilidad, favorece la evacuación de la humedad y proporciona un secado rápido, manteniendo una agradable sensación de confort incluso en los trabajos más exigentes.\n\nSu tejido técnico combina resistencia al uso diario con una gran libertad de movimiento, mientras que su diseño de líneas limpias y acabado cuidado aporta una imagen profesional en cualquier entorno de trabajo.\n\nDisponible en varios colores y tallas, es una opción ideal para equipar equipos de trabajo y personalizar con la identidad corporativa de la empresa.\n\nUna camiseta técnica que une funcionalidad, comodidad y la calidad que distingue a PAREDES SEGURIDAD, pensada para acompañar al profesional en cada desafío de su jornada."
+    },
+    {
+      "slug": "rio-jaspe", "code": "RIO JASPE", "name": "Camiseta Río Jaspe", "type": "Camiseta Manga Corta", "category": "manga-corta",
+      "norm": "100% poliéster mesh · Acabado jaspeado",
+      "specs": [["Tipo", "Camiseta manga corta técnica"], ["Corte", "Unisex"], ["Composición", "100% poliéster mesh"], ["Acabado", "Jaspeado"], ["Prestaciones", "Ligera, transpirable y de secado rápido"]],
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+      "colors": [["Azul jaspe", false], ["Salmón jaspe", false], ["Gris jaspe", false]],
+      "chart": { "kind": "top", "sizes": ["S", "M", "L", "XL", "2XL", "3XL"], "rows": { "A": [50, 52, 54, 57, 60, 63], "B": [70, 72, 74, 76, 78, 80] } },
+      "description": "La camiseta RÍO JASPE combina un diseño moderno con las prestaciones que exige el entorno profesional.\n\nConfeccionada en 100% poliéster mesh, ofrece una excelente transpirabilidad y una rápida evacuación de la humedad, ayudando a mantener el cuerpo seco y cómodo durante toda la jornada laboral.\n\nSu característico acabado jaspeado aporta una imagen actual y diferenciadora sin renunciar a la funcionalidad.\n\nLigera, resistente y de secado rápido, está pensada para profesionales que necesitan libertad de movimiento y un alto nivel de confort en trabajos dinámicos o realizados en ambientes cálidos.\n\nDisponible en varios colores y tallas, la Río Jaspe es una prenda versátil, ideal para completar cualquier uniforme laboral y personalizar con la identidad corporativa de la empresa, manteniendo siempre la calidad y la fiabilidad que distinguen a PAREDES SEGURIDAD."
+    },
+    {
+      "slug": "boss", "code": "BOSS", "name": "Polo Boss", "type": "Polo Manga Corta", "category": "manga-corta",
+      "norm": "65% poliéster 35% algodón · 200 g · Piqué",
+      "specs": [["Tipo", "Polo manga corta"], ["Corte", "Unisex"], ["Composición", "65% poliéster, 35% algodón, tejido piqué"], ["Gramaje", "200 g/m²"], ["Cuello y bocamangas", "Tricotosa"]],
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+      "colors": [["Marino", false], ["Negro", false], ["Blanco", false], ["Granate", false]],
+      "chart": { "kind": "top", "sizes": ["S", "M", "L", "XL", "2XL", "3XL"], "rows": { "A": [48, 51, 54, 57, 60, 63], "B": [69, 72, 74, 76, 78, 81] } },
+      "description": "El Polo BOSS es la elección perfecta para quienes buscan una imagen profesional sin renunciar a la comodidad.\n\nConfeccionado en un resistente tejido piqué de 200 g/m², con una composición de 65% poliéster y 35% algodón, combina la durabilidad del poliéster con el tacto agradable y la transpirabilidad del algodón, ofreciendo un excelente comportamiento frente al uso diario.\n\nSu diseño clásico incorpora cuello y bocamangas de tricotosa, que aportan un ajuste cómodo y un acabado elegante, manteniendo la prenda en perfecto estado jornada tras jornada.\n\nIdeal para sectores como hostelería, comercio, logística, mantenimiento o atención al cliente, proporciona una imagen cuidada y uniforme en cualquier entorno laboral.\n\nDisponible en varios colores y tallas, el Polo Boss es una prenda versátil, resistente y fácil de personalizar con la identidad corporativa de la empresa, reflejando la calidad, funcionalidad y confianza que caracterizan a PAREDES SEGURIDAD."
+    },
+    {
+      "slug": "brasil", "code": "BRASIL", "name": "Polo Brasil", "type": "Polo Manga Corta", "category": "manga-corta",
+      "norm": "100% Square Pinhole · Tejido técnico",
+      "specs": [["Tipo", "Polo manga corta técnico"], ["Corte", "Unisex"], ["Composición", "100% Square Pinhole"], ["Prestaciones", "Transpirable, ligero y de secado rápido"]],
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+      "colors": [["Marino", false], ["Blanco", false], ["Negro", false]],
+      "chart": { "kind": "top", "sizes": ["S", "M", "L", "XL", "2XL", "3XL"], "rows": { "A": [50, 52, 55, 58, 61, 64], "B": [70, 71, 72, 74, 76, 77] } },
+      "description": "El Polo BRASIL ha sido desarrollado para ofrecer el equilibrio perfecto entre una imagen profesional y el máximo confort en el trabajo diario.\n\nFabricado en tejido técnico 100% Square Pinhole, destaca por su excelente transpirabilidad, ligereza y capacidad de secado rápido, manteniendo una agradable sensación de frescura incluso durante las jornadas más intensas.\n\nSu diseño moderno, con cuello de polo y un acabado limpio y elegante, proporciona un ajuste cómodo y una gran libertad de movimiento, adaptándose a las exigencias de sectores como logística, industria, comercio, mantenimiento, hostelería o servicios.\n\nAdemás, su resistencia al uso continuado lo convierte en una prenda duradera y de fácil mantenimiento.\n\nDisponible en varios colores y tallas, el Polo Brasil es una opción ideal para vestir equipos de trabajo con una imagen uniforme y profesional, ofreciendo la calidad, funcionalidad y fiabilidad que distinguen a PAREDES SEGURIDAD."
+    },
+    {
+      "slug": "grau", "code": "GRAU", "name": "Camiseta Grau", "type": "Camiseta Manga Larga", "category": "manga-larga",
+      "norm": "100% algodón · 160 g · Punto liso",
+      "specs": [["Tipo", "Camiseta manga larga"], ["Corte", "Unisex"], ["Composición", "100% algodón, punto liso"], ["Gramaje", "160 g/m²"], ["Cuello y puños", "Cuello de lycra y puños elásticos"]],
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+      "colors": [["Marino", true], ["Negro", true], ["Verde militar", false]],
+      "chart": { "kind": "top", "sizes": ["S", "M", "L", "XL", "2XL", "3XL", "4XL"], "rows": { "A": [48, 51, 54, 57, 60, 64, 67], "B": [68, 71, 73, 75, 77, 79, 81], "C": [60, 62, 64, 65, 66, 67, 68] } },
+      "description": "La Camiseta GRAU está diseñada para ofrecer confort, resistencia y protección adicional en trabajos realizados en ambientes frescos o durante los meses de menor temperatura.\n\nConfeccionada en 100% algodón de 160 g/m², proporciona un tacto suave, una excelente transpirabilidad y una gran comodidad para un uso continuado.\n\nSu diseño de manga larga, junto con el cuello de lycra y los puños elásticos, garantiza un ajuste cómodo y una mayor durabilidad, adaptándose perfectamente al movimiento del profesional sin perder su forma.\n\nEs una prenda versátil, ideal para sectores como industria, logística, mantenimiento, construcción, almacén o servicios técnicos.\n\nDisponible en varios colores y en un amplio rango de tallas, la Camiseta Grau es una opción perfecta para completar cualquier uniforme laboral y personalizar con la imagen corporativa de la empresa, manteniendo los estándares de calidad, funcionalidad y confianza que caracterizan a PAREDES SEGURIDAD."
+    },
+    {
+      "slug": "lago", "code": "LAGO", "name": "Polo Lago", "type": "Polo Manga Larga", "category": "manga-larga",
+      "norm": "65% poliéster 35% algodón · 200 g · Piqué",
+      "specs": [["Tipo", "Polo manga larga"], ["Corte", "Unisex"], ["Composición", "65% poliéster, 35% algodón, tejido piqué"], ["Gramaje", "200 g/m²"], ["Cuello y puños", "Canalé"]],
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+      "colors": [["Granate", false], ["Negro", true], ["Blanco", true], ["Marino", true]],
+      "chart": { "kind": "top", "sizes": ["S", "M", "L", "XL", "2XL", "3XL", "4XL"], "rows": { "A": [48, 51, 54, 57, 60, 63, 66], "B": [69, 72, 74, 76, 78, 81, 83], "C": [60, 62, 64, 66, 67, 68, 69] } },
+      "description": "El Polo LAGO está diseñado para ofrecer una combinación perfecta de confort, resistencia y una imagen profesional durante las jornadas de trabajo en ambientes frescos.\n\nConfeccionado en un tejido piqué de 200 g/m², con una composición de 65% poliéster y 35% algodón, proporciona un excelente equilibrio entre durabilidad, transpirabilidad y comodidad para un uso intensivo.\n\nSu diseño de manga larga, con cuello y puños de canalé, garantiza un ajuste cómodo y una mayor protección frente a las bajas temperaturas, manteniendo una apariencia cuidada y elegante.\n\nEs una prenda ideal para profesionales de sectores como industria, logística, mantenimiento, comercio, hostelería o servicios técnicos, donde la funcionalidad y la imagen corporativa son igual de importantes.\n\nDisponible en varios colores y tallas, el Polo Lago es una opción versátil y resistente, perfecta para completar cualquier uniforme laboral y personalizar con la identidad de la empresa, manteniendo siempre los estándares de calidad y fiabilidad que caracterizan a PAREDES SEGURIDAD."
+    },
+    {
+      "slug": "prime", "code": "PRIME", "name": "Sudadera Prime", "type": "Sudadera Cuello Redondo", "category": "sudaderas",
+      "norm": "65% poliéster 35% algodón · 280 g · Felpa perchada",
+      "specs": [["Tipo", "Sudadera cuello redondo"], ["Corte", "Unisex"], ["Composición", "65% poliéster, 35% algodón"], ["Gramaje", "280 g/m²"], ["Interior", "Felpa lisa perchada"], ["Cuello, cintura y puños", "Canalé"]],
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+      "colors": [["Verde botella", false], ["Granate", false], ["Gris plomo", false], ["Gris vigoré", true], ["Negro", true], ["Royal", false], ["Marino", true], ["Blanco", true]],
+      "chart": { "kind": "top", "sizes": ["S", "M", "L", "XL", "2XL", "3XL", "4XL"], "rows": { "A": [52, 55, 58, 61, 64, 67, 70], "B": [71, 73, 75, 77, 79, 81, 83], "C": [62, 64, 66, 68, 70, 72, 74] } },
+      "description": "La Sudadera PRIME está diseñada para proporcionar calidez, confort y resistencia en los entornos de trabajo más exigentes.\n\nConfeccionada en un tejido de 280 g/m², con una composición de 65% poliéster y 35% algodón, incorpora un interior de felpa lisa perchada que aporta un excelente aislamiento térmico sin comprometer la comodidad.\n\nSu diseño de cuello redondo, junto con el cuello, la cintura y los puños de canalé, garantiza un ajuste cómodo y duradero, manteniendo la prenda en perfecto estado incluso tras un uso continuado.\n\nGracias a su resistencia y libertad de movimiento, es una opción ideal para profesionales de sectores como logística, industria, mantenimiento, transporte, construcción o almacén.\n\nDisponible en una amplia variedad de colores y tallas, la Sudadera Prime es perfecta para completar cualquier uniforme laboral y personalizar con la imagen corporativa de la empresa, ofreciendo la calidad, funcionalidad y fiabilidad que distinguen a PAREDES SEGURIDAD."
+    },
+    {
+      "slug": "zip", "code": "ZIP", "name": "Sudadera Zip", "type": "Sudadera Media Cremallera", "category": "sudaderas",
+      "norm": "65% poliéster 35% algodón · 280 g · Media cremallera",
+      "specs": [["Tipo", "Sudadera media cremallera"], ["Corte", "Unisex"], ["Composición", "65% poliéster, 35% algodón"], ["Gramaje", "280 g/m²"], ["Interior", "Felpa lisa perchada"], ["Cintura y puños", "Canalé"]],
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+      "colors": [["Marino", false], ["Gris vigoré", false], ["Blanco", false], ["Negro", false], ["Granate", false]],
+      "chart": { "kind": "top", "sizes": ["S", "M", "L", "XL", "2XL", "3XL"], "rows": { "A": [52, 55, 58, 61, 64, 67], "B": [71, 73, 75, 77, 79, 81], "C": [62, 64, 68, 70, 72, 74] } },
+      "description": "La Sudadera ZIP ofrece el equilibrio perfecto entre abrigo, comodidad y funcionalidad para el trabajo diario.\n\nFabricada en tejido de 280 g/m², con 65% poliéster y 35% algodón, incorpora un interior de felpa lisa perchada que proporciona calidez y confort durante toda la jornada.\n\nSu diseño con media cremallera permite regular la ventilación con facilidad, mientras que la cintura y los puños de canalé aseguran un ajuste cómodo y duradero.\n\nDisponible en varios colores y tallas, es una prenda ideal para completar cualquier uniforme laboral y personalizar con la imagen corporativa, manteniendo la calidad y fiabilidad propias de PAREDES SEGURIDAD."
+    },
+    {
+      "slug": "soria", "code": "SORIA", "name": "Polar Soria", "type": "Polar", "category": "polar-softshell-parka",
+      "norm": "100% poliéster · 300 g · Cremallera completa",
+      "specs": [["Tipo", "Polar con cremallera completa"], ["Corte", "Unisex"], ["Composición", "100% poliéster"], ["Gramaje", "300 g/m²"], ["Bajo", "Ajustador elástico"]],
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+      "colors": [["Negro", true], ["Marino", true], ["Blanco", false], ["Royal", false], ["Rojo", false], ["Verde botella", false], ["Gris antracita", true]],
+      "chart": { "kind": "top", "sizes": ["S", "M", "L", "XL", "2XL", "3XL", "4XL"], "rows": { "A": [51, 54, 58, 62, 66, 69, 72], "B": [67, 70, 73, 76, 79, 81, 83], "C": [60, 62, 64, 66, 72, 70, 73] } },
+      "description": "El Polar SORIA está diseñado para proporcionar abrigo, confort y resistencia durante la jornada laboral.\n\nFabricado en 100% poliéster de 300 g/m², ofrece un excelente aislamiento térmico, manteniendo el calor corporal sin renunciar a la ligereza y a la libertad de movimiento, incluso en trabajos realizados en ambientes fríos o al aire libre.\n\nSu diseño con cremallera completa facilita el uso diario y permite regular la ventilación según las necesidades de cada momento, mientras que el ajustador elástico en el bajo proporciona un ajuste más cómodo y una mejor protección frente al frío.\n\nDisponible en varios colores y tallas, es una prenda ideal para completar cualquier uniforme laboral y personalizar con la imagen corporativa de la empresa, manteniendo la calidad, funcionalidad y fiabilidad que distinguen a PAREDES SEGURIDAD."
+    },
+    {
+      "slug": "leon", "code": "LEON", "name": "Softshell León", "type": "Softshell", "category": "polar-softshell-parka",
+      "norm": "95% poliéster 5% elastano · 300 g · 3 capas",
+      "specs": [["Tipo", "Chaqueta softshell"], ["Corte", "Unisex"], ["Composición", "95% poliéster, 5% elastano, 3 capas"], ["Gramaje", "300 g/m²"], ["Membrana", "Transpirable y resistente al agua"], ["Puños", "Ajustables con velcro"], ["Bolsillos", "Con cremallera"]],
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+      "colors": [["Marino", true], ["Gris plomo", false], ["Negro", true]],
+      "chart": { "kind": "top", "sizes": ["S", "M", "L", "XL", "2XL", "3XL", "4XL"], "rows": { "A": [52, 55, 58, 61, 64, 67, 70], "B": [68, 70, 72, 74, 76, 78, 80], "C": [65, 66, 67, 68, 69, 70, 71] } },
+      "description": "El Softshell LEÓN está diseñado para ofrecer la máxima protección y confort en trabajos realizados al aire libre o en condiciones climáticas cambiantes.\n\nFabricado con un tejido Softshell de 300 g/m², compuesto por 95% poliéster y 5% elastano, incorpora una membrana transpirable y resistente al agua que protege frente al viento y la humedad sin renunciar a la comodidad.\n\nSu diseño ergonómico proporciona una excelente libertad de movimiento, mientras que el puño ajustable con cierre de velcro permite un ajuste preciso y una mayor protección frente al frío y al viento.\n\nAdemás, cuenta con cuello alto y prácticos bolsillos con cremallera para un uso funcional en el día a día.\n\nDisponible en varios colores y tallas, el Softshell León es una prenda versátil y resistente, ideal para completar cualquier uniforme laboral con la calidad, funcionalidad y fiabilidad que caracterizan a PAREDES SEGURIDAD."
+    },
+    {
+      "slug": "teruel", "code": "TERUEL", "name": "Softshell Teruel", "type": "Softshell", "category": "polar-softshell-parka",
+      "norm": "95% poliéster 5% elastano · 300 g · Capucha desmontable",
+      "specs": [["Tipo", "Chaqueta softshell con capucha"], ["Corte", "Unisex"], ["Composición", "95% poliéster, 5% elastano, 3 capas"], ["Gramaje", "300 g/m²"], ["Membrana", "Transpirable y resistente al agua"], ["Cuello", "Interior en micropolar"], ["Capucha", "Desmontable con cremallera"], ["Puños", "Ajustables con velcro"]],
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+      "colors": [["Gris/Negro", false], ["Verde/Negro", false], ["Negro/Negro", false]],
+      "chart": { "kind": "top", "sizes": ["S", "M", "L", "XL", "2XL", "3XL"], "rows": { "A": [52, 55, 58, 61, 64, 67], "B": [68, 70, 72, 74, 76, 78], "C": [65, 66, 67, 68, 69, 70] } },
+      "description": "El Softshell TERUEL está diseñado para ofrecer la máxima protección frente a las inclemencias del tiempo sin renunciar a la comodidad y la libertad de movimiento.\n\nFabricado en un tejido Softshell de 300 g/m², compuesto por 95% poliéster y 5% elastano, incorpora una membrana transpirable y resistente al agua que protege del viento y la humedad durante toda la jornada laboral.\n\nSu interior del cuello en micropolar aporta un extra de confort y calidez, mientras que los puños ajustables con cierre de velcro permiten un ajuste preciso para una mejor protección.\n\nAdemás, incorpora una capucha desmontable mediante cremallera, adaptándose fácilmente a las necesidades de cada momento y a las condiciones meteorológicas.\n\nDisponible en varias combinaciones de color y tallas, el Softshell Teruel es una prenda versátil y resistente, ideal para completar cualquier uniforme profesional con la calidad, funcionalidad y fiabilidad que distinguen a PAREDES SEGURIDAD."
+    },
+    {
+      "slug": "london", "code": "LONDON", "name": "Parka London", "type": "Parka", "category": "polar-softshell-parka",
+      "norm": "Exterior impermeable · Interior acolchado",
+      "specs": [["Tipo", "Parka"], ["Corte", "Unisex"], ["Exterior", "100% poliéster impermeable"], ["Interior", "100% poliéster acolchado"], ["Cuello", "Alto, forrado en tejido polar"], ["Capucha", "Plegable"], ["Bolsillos", "Dos interiores con velcro"]],
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+      "colors": [["Negro", false], ["Verde botella", false], ["Blanco", false], ["Marino", false]],
+      "chart": { "kind": "top", "sizes": ["S", "M", "L", "XL", "2XL", "3XL"], "rows": { "A": [57, 60, 63, 66, 69, 72], "B": [75, 78, 80, 82, 84, 86], "C": [64, 66, 68, 70, 72, 74] } },
+      "description": "La Parka LONDON está diseñada para ofrecer una protección eficaz frente al frío, el viento y la lluvia sin renunciar a la comodidad.\n\nFabricada con un exterior de 100% poliéster impermeable y un interior acolchado de 100% poliéster, incorpora además un cuello alto forrado en tejido polar que proporciona un extra de calidez en las jornadas más exigentes.\n\nPensada para un uso profesional, cuenta con capucha plegable, dos bolsillos interiores con cierre de velcro para guardar objetos de forma segura y un diseño funcional que garantiza confort y libertad de movimiento durante toda la jornada.\n\nDisponible en varios colores y tallas, la Parka London es una prenda resistente y versátil, ideal para completar cualquier uniforme laboral con la calidad, funcionalidad y fiabilidad que caracterizan a PAREDES SEGURIDAD."
+    },
+    {
+      "slug": "colorado", "code": "COLORADO", "name": "Chaleco Colorado", "type": "Chaleco", "category": "chalecos",
+      "norm": "Sarga poliéster/algodón 200 g · Acolchado",
+      "specs": [["Tipo", "Chaleco acolchado multibolsillos"], ["Corte", "Unisex"], ["Exterior", "Sarga poliéster/algodón, 200 g/m²"], ["Interior", "100% poliéster acolchado"], ["Detalles", "Cuello alto, cierre frontal y múltiples bolsillos"]],
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+      "colors": [["Marino", true], ["Gris", false], ["Blanco", false], ["Negro", false]],
+      "chart": { "kind": "top", "sizes": ["S", "M", "L", "XL", "2XL", "3XL", "4XL"], "rows": { "A": [54, 57, 60, 63, 66, 69, 72], "B": [68, 71, 74, 77, 80, 83, 86] } },
+      "description": "El Chaleco COLORADO está diseñado para ofrecer abrigo, funcionalidad y resistencia en los trabajos que requieren libertad de movimiento.\n\nSu exterior de sarga de poliéster y algodón de 200 g/m², combinado con un interior acolchado de 100% poliéster, proporciona un excelente equilibrio entre durabilidad, confort y aislamiento térmico para afrontar las jornadas más exigentes.\n\nSu diseño incorpora múltiples bolsillos funcionales, ideales para tener herramientas y accesorios siempre al alcance de la mano, además de un cuello alto y cierre frontal que ayudan a proteger del frío.\n\nDisponible en varios colores y tallas, el Chaleco Colorado es una prenda versátil y práctica, perfecta para completar cualquier uniforme laboral con la calidad, funcionalidad y fiabilidad que distinguen a PAREDES SEGURIDAD."
+    },
+    {
+      "slug": "limite", "code": "LIMITE", "name": "Chaleco Límite", "type": "Chaleco Softshell", "category": "chalecos",
+      "norm": "95% poliéster 5% elastano · 300 g · Softshell",
+      "specs": [["Tipo", "Chaleco softshell"], ["Corte", "Unisex"], ["Composición", "95% poliéster, 5% elastano"], ["Gramaje", "300 g/m²"], ["Cuello", "Alto, forro interior micropolar"], ["Prestaciones", "Resistente al viento y al agua"], ["Bolsillos", "Con cremallera"]],
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+      "colors": [["Gris plomo", false], ["Blanco", false], ["Negro", false], ["Royal", false], ["Marino", false], ["Verde militar", false]],
+      "chart": { "kind": "top", "sizes": ["S", "M", "L", "XL", "2XL", "3XL"], "rows": { "A": [50, 53, 56, 59, 62, 65], "B": [68, 70, 72, 74, 76, 78] } },
+      "description": "El Chaleco LÍMITE combina un diseño moderno con la protección y comodidad que exige el trabajo diario.\n\nFabricado en tejido Softshell de 300 g/m², con 95% poliéster y 5% elastano, ofrece una excelente resistencia al viento, al agua y una gran libertad de movimiento gracias a su tejido elástico.\n\nSu cuello alto interior de micropolar proporciona un agradable aislamiento térmico sin añadir peso, mientras que sus bolsillos con cremallera aportan funcionalidad y confort en cualquier entorno laboral.\n\nDisponible en varios colores y tallas, el Chaleco Límite es una prenda versátil y práctica, ideal para completar cualquier uniforme profesional con la calidad, resistencia y fiabilidad que caracterizan a PAREDES SEGURIDAD."
+    },
+    {
+      "slug": "scorpius", "code": "SCORPIUS", "name": "Chaleco Scorpius", "type": "Chaleco Acolchado Ligero", "category": "chalecos",
+      "norm": "Exterior 100% nylon · Relleno poliéster reciclado",
+      "specs": [["Tipo", "Chaleco acolchado ligero"], ["Corte", "Unisex"], ["Exterior", "100% nylon"], ["Relleno y forro", "100% poliéster reciclado"], ["Detalles", "Cuello alto y cremallera completa"]],
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+      "colors": [["Negro", false], ["Verde militar", false], ["Marino", false], ["Gris", false]],
+      "chart": { "kind": "top", "sizes": ["S", "M", "L", "XL", "2XL", "3XL"], "rows": { "A": [48, 51, 54, 57, 60, 63], "B": [62, 64, 66, 68, 70, 72] } },
+      "description": "El Chaleco SCORPIUS es una prenda ligera y versátil, diseñada para aportar un extra de abrigo sin limitar la libertad de movimiento.\n\nSu exterior de 100% nylon y el relleno y forro de 100% poliéster reciclado ofrecen un excelente equilibrio entre ligereza, confort y aislamiento térmico, convirtiéndolo en una opción ideal para el trabajo diario.\n\nSu diseño acolchado proporciona una protección eficaz frente al frío, mientras que el cuello alto y el cierre de cremallera completa mejoran el confort en cualquier entorno laboral.\n\nDisponible en varios colores y tallas, el Chaleco Scorpius es perfecto para completar cualquier uniforme profesional con una imagen moderna, manteniendo la calidad, funcionalidad y fiabilidad que caracterizan a PAREDES SEGURIDAD."
+    },
+    {
+      "slug": "ruedo", "code": "RUEDO", "name": "Bermuda Ruedo", "type": "Bermuda Multibolsillos", "category": "pantalones",
+      "norm": "64% poliéster 34% algodón 2% elastano · 240 g",
+      "specs": [["Tipo", "Bermuda multibolsillos"], ["Corte", "Unisex"], ["Composición", "64% poliéster, 34% algodón, 2% elastano"], ["Gramaje", "240 g/m²"]],
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+      "colors": [["Marino", false], ["Blanco", false], ["Beige", false], ["Gris plomo", false]],
+      "chart": { "kind": "bottom", "sizes": ["S", "M", "L", "XL", "2XL", "3XL"], "rows": { "A": [32, 36, 40, 44, 48, 52], "B": [48, 50, 52, 54, 56, 58] } },
+      "description": "La Bermuda RUEDO está diseñada para ofrecer comodidad, resistencia y funcionalidad durante las jornadas de trabajo en los meses más cálidos.\n\nFabricada en un tejido de 240 g/m², compuesto por 64% poliéster, 34% algodón y 2% elastano, combina durabilidad, transpirabilidad y elasticidad para proporcionar una excelente libertad de movimiento.\n\nSu diseño multibolsillos permite llevar herramientas y accesorios siempre a mano, convirtiéndola en una prenda práctica para trabajos dinámicos.\n\nDisponible en varios colores y tallas, la Bermuda Ruedo es una opción ideal para profesionales de sectores como logística, industria, mantenimiento, almacén o construcción, ofreciendo la calidad, funcionalidad y fiabilidad que caracterizan a PAREDES SEGURIDAD."
+    },
+    {
+      "slug": "valor", "code": "VALOR", "name": "Bermuda Valor", "type": "Bermuda Stretch tipo Trekking", "category": "pantalones",
+      "norm": "88% nylon 12% elastano · 170 g · Stretch",
+      "specs": [["Tipo", "Bermuda stretch tipo trekking"], ["Corte", "Unisex"], ["Composición", "88% nylon, 12% elastano"], ["Gramaje", "170 g/m²"], ["Detalles", "Bolsillos con cremallera y cinturón integrado"]],
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+      "colors": [["Marino", false], ["Gris/Negro", false]],
+      "chart": { "kind": "bottom", "sizes": ["S", "M", "L", "XL", "2XL", "3XL"], "rows": { "A": [30, 34, 38, 43, 47, 51], "B": [47, 49, 51, 53, 55, 57] } },
+      "description": "La Bermuda VALOR está diseñada para profesionales que buscan la máxima comodidad y libertad de movimiento durante los trabajos más exigentes.\n\nFabricada en un tejido técnico de 170 g/m², compuesto por 88% nylon y 12% elastano, ofrece una gran ligereza, elasticidad y resistencia al desgaste, siendo ideal para un uso intensivo.\n\nSu diseño stretch tipo trekking proporciona un ajuste ergonómico y una movilidad excepcional, mientras que los bolsillos con cremallera y el cinturón integrado aportan funcionalidad y un ajuste seguro.\n\nDisponible en varios colores y tallas, la Bermuda Valor es una opción perfecta para trabajos dinámicos en exteriores o interiores, combinando confort, rendimiento y la calidad que caracteriza a PAREDES SEGURIDAD."
+    },
+    {
+      "slug": "cima", "code": "CIMA", "name": "Pantalón Cima", "type": "Pantalón Largo Multibolsillos", "category": "pantalones",
+      "norm": "64% poliéster 34% algodón 2% elastano · 240 g",
+      "specs": [["Tipo", "Pantalón largo multibolsillos"], ["Corte", "Unisex"], ["Composición", "64% poliéster, 34% algodón, 2% elastano"], ["Gramaje", "240 g/m²"], ["Bolsillos", "2 frontales, 2 laterales y 2 traseros con solapa y velcro"]],
+      "sizes": ["36", "38", "40", "42", "44", "46", "48", "50", "52", "54", "56", "58", "60"],
+      "colors": [["Gris plomo", false], ["Blanco", false], ["Negro", false], ["Beige", false], ["Marino", false]],
+      "chart": { "kind": "bottom", "sizes": ["36", "38", "40", "42", "44", "46", "48", "50", "52", "54", "56", "58", "60"], "rows": { "A": [30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54], "B": [102, 103, 104, 105, 106, 106, 107, 108, 109, 109, 110, 110, 111] } },
+      "description": "El Pantalón CIMA está diseñado para ofrecer resistencia, comodidad y funcionalidad en el trabajo diario.\n\nFabricado en un tejido de 240 g/m², compuesto por 64% poliéster, 34% algodón y 2% elastano, combina durabilidad, transpirabilidad y una ligera elasticidad para proporcionar un excelente confort durante toda la jornada.\n\nSu diseño multibolsillos incorpora dos bolsillos frontales, dos bolsillos laterales y dos bolsillos traseros con solapa y cierre de velcro, permitiendo llevar herramientas y accesorios siempre a mano.\n\nDisponible en varios colores y una amplia gama de tallas, el Pantalón Cima es una prenda práctica y resistente, ideal para profesionales que buscan calidad, funcionalidad y la fiabilidad que caracterizan a PAREDES SEGURIDAD."
+    },
+    {
+      "slug": "colina", "code": "COLINA", "name": "Pantalón Colina", "type": "Pantalón Largo Stretch tipo Trekking", "category": "pantalones",
+      "norm": "88% nylon 12% elastano · 170 g · Ripstop",
+      "specs": [["Tipo", "Pantalón largo stretch tipo trekking"], ["Corte", "Unisex, slim fit"], ["Composición", "88% nylon, 12% elastano"], ["Gramaje", "170 g/m²"], ["Tejido", "Ripstop con acabado resistente al agua"], ["Detalles", "Cinturón integrado, bolsillos con cremallera invertida y elástico ajustable en los bajos"]],
+      "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+      "colors": [["Marino", false], ["Gris/Negro", false], ["Negro", false]],
+      "chart": { "kind": "bottom", "sizes": ["S", "M", "L", "XL", "2XL", "3XL"], "rows": { "A": [30, 34, 38, 43, 47, 51], "B": [104, 106, 108, 110, 112, 114] } },
+      "description": "El Pantalón COLINA está diseñado para profesionales que buscan la máxima libertad de movimiento sin renunciar a la resistencia.\n\nFabricado en tejido Ripstop de 170 g/m², con 88% nylon y 12% elastano, ofrece un excelente equilibrio entre ligereza, elasticidad y durabilidad, además de un acabado resistente al agua para afrontar con mayor comodidad las condiciones cambiantes del trabajo.\n\nSu diseño stretch tipo trekking y corte slim fit favorecen una movilidad excepcional, mientras que el cinturón integrado con cierre de plástico, el cierre frontal con botón, cremallera metálica y velcro, y los bolsillos con cremalleras invertidas aportan seguridad y funcionalidad.\n\nAdemás, incorpora elástico ajustable en los bajos de cada pernera para un ajuste más preciso.\n\nDisponible en varios colores y tallas, el Pantalón Colina combina rendimiento, confort y la calidad que caracteriza a PAREDES SEGURIDAD."
+    }
+  ]
+}

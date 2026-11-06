@@ -2,100 +2,67 @@
 
 import Link from "next/link";
 import { useStore } from "@/context/StoreContext";
-import { PRODUCTS } from "@/data/storeData";
 
 export default function Cart() {
-  const { cart, updateCartQty, removeFromCart } = useStore();
+  const { cart, count, loaded, setQty, removeFromCart } = useStore();
 
-  const cartLines = cart.map((l, i) => {
-    const prod = PRODUCTS.find(x => x.id === l.id);
-    return {
-      ...l,
-      index: i,
-      name: prod.name,
-      brand: prod.brand,
-      img: prod.img,
-      price: prod.price,
-      total: prod.price * l.qty,
-    };
-  });
-
-  const sub = cartLines.reduce((acc, l) => acc + l.total, 0);
-  const net = sub / 1.18;
-  const igv = sub - net;
-
-  const fmt = (n) => `S/ ${n.toFixed(2)}`;
+  if (!loaded) return <section className="wrap" style={{ padding: "40px 20px" }} />;
 
   return (
-    <section style={{ maxWidth: "1240px", margin: "0 auto", padding: "34px 20px 60px" }}>
-      <h2 style={{ fontSize: "32px", margin: 0 }}>Tu carrito</h2>
+    <section className="wrap" style={{ paddingTop: 30, paddingBottom: 60 }}>
+      <h1 style={{ fontSize: 32, margin: 0 }}>Tu carrito</h1>
       <hr className="hr" />
       {cart.length === 0 ? (
-        <div style={{ background: "#fff", border: "1px solid var(--color-divider)", borderRadius: "var(--radius-md)", padding: "44px", textAlign: "center" }}>
-          <p style={{ fontSize: "16px", color: "var(--color-neutral-700)" }}>Aún no has agregado productos.</p>
-          <Link href="/catalog" className="btn btn-primary" style={{ letterSpacing: "0.05em", textTransform: "uppercase", fontSize: "13px", padding: "11px 22px", display: "inline-block" }}>
-            Ir al catálogo
-          </Link>
+        <div className="panel" style={{ padding: 44, textAlign: "center" }}>
+          <p className="muted" style={{ fontSize: 16 }}>Aún no has agregado productos.</p>
+          <Link href="/catalog" className="btn-solid">Ir al catálogo</Link>
         </div>
       ) : (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: "28px", alignItems: "start" }}>
-          <div style={{ background: "#fff", border: "1px solid var(--color-divider)", borderRadius: "var(--radius-md)", padding: "6px 20px 20px", gridColumn: "span 2", minWidth: 0 }}>
-            <table className="table" style={{ width: "100%", fontSize: "14.5px" }}>
-              <thead><tr><th style={{ textAlign: "left" }}>Producto</th><th style={{ textAlign: "center" }}>Talla</th><th style={{ textAlign: "center" }}>Cantidad</th><th style={{ textAlign: "right" }}>Importe</th></tr></thead>
-              <tbody>
-                {cartLines.map(l => (
-                  <tr key={`${l.id}-${l.size}`}>
-                    <td style={{ padding: "14px 0" }}>
-                      <div style={{ display: "flex", gap: "14px", alignItems: "center" }}>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={l.img} alt={l.name} style={{ width: "66px", height: "52px", objectFit: "contain", border: "1px solid var(--color-divider)", borderRadius: "var(--radius-sm)", background: "#fff" }} />
-                        <div>
-                          <div style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: "15px" }}>{l.name}</div>
-                          <div className="wp-num" style={{ fontSize: "12.5px", color: "var(--color-neutral-700)" }}>{l.brand} · {fmt(l.price)} c/u</div>
-                          <button onClick={() => removeFromCart(l.index)} style={{ fontSize: "12.5px", color: "var(--color-accent-700)", background: "transparent", border: 0, padding: 0, cursor: "pointer", textDecoration: "underline" }}>Quitar</button>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="wp-num" style={{ textAlign: "center" }}>{l.size}</td>
-                    <td style={{ textAlign: "center" }}>
-                      <div style={{ display: "inline-flex", alignItems: "center", border: "1px solid var(--color-neutral-400)", borderRadius: "var(--radius-md)" }}>
-                        <button className="btn btn-ghost" onClick={() => updateCartQty(l.index, -1)} style={{ padding: "5px 11px" }}>−</button>
-                        <span className="wp-num" style={{ minWidth: "30px", textAlign: "center" }}>{l.qty}</span>
-                        <button className="btn btn-ghost" onClick={() => updateCartQty(l.index, 1)} style={{ padding: "5px 11px" }}>+</button>
-                      </div>
-                    </td>
-                    <td className="wp-num" style={{ textAlign: "right", fontWeight: 600 }}>{fmt(l.total)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        <div className="cart-layout">
+          <div className="panel" style={{ padding: "4px 20px" }}>
+            {cart.map((l) => (
+              <div key={l.key} className="cart-line">
+                <Link href={`/product/${l.slug}`}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={l.image} alt={l.name} />
+                </Link>
+                <div style={{ minWidth: 0 }}>
+                  <Link href={`/product/${l.slug}`} style={{ fontWeight: 700, fontSize: 16, color: "var(--color-text)" }}>{l.name}</Link>
+                  <div className="meta">Color: {l.color} · Talla: {l.size} · Código {l.code}</div>
+                  <button type="button" className="link-btn" onClick={() => removeFromCart(l.key)} style={{ marginTop: 6 }}>Quitar</button>
+                </div>
+                <div className="qty-col">
+                  <div className="qty">
+                    <button type="button" onClick={() => setQty(l.key, l.qty - 1)} aria-label="Restar">−</button>
+                    <input
+                      type="number"
+                      min="1"
+                      inputMode="numeric"
+                      className="wp-num"
+                      value={l.qty}
+                      onChange={(e) => {
+                        const n = Number(e.target.value.replace(/\D/g, "").slice(0, 4));
+                        if (n > 0) setQty(l.key, n);
+                      }}
+                      aria-label={`Cantidad de ${l.name}`}
+                    />
+                    <button type="button" onClick={() => setQty(l.key, l.qty + 1)} aria-label="Sumar">+</button>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
-          <div style={{ background: "#fff", border: "1px solid var(--color-divider)", borderRadius: "var(--radius-md)", padding: "24px" }}>
-            <div style={{ fontSize: "12px", letterSpacing: "0.12em", textTransform: "uppercase", fontWeight: 600, color: "var(--color-neutral-700)" }}>Resumen</div>
-            <div style={{ display: "flex", justifyContent: "space-between", fontSize: "14.5px", marginTop: "16px" }}><span>Subtotal</span><span className="wp-num">{fmt(net)}</span></div>
-            <div style={{ display: "flex", justifyContent: "space-between", fontSize: "14.5px", marginTop: "8px" }}><span>IGV 18%</span><span className="wp-num">{fmt(igv)}</span></div>
-            <div style={{ display: "flex", justifyContent: "space-between", fontSize: "14.5px", marginTop: "8px" }}><span>Envío Lima Metropolitana</span><span>Gratis</span></div>
+          <aside className="panel" style={{ padding: 24 }}>
+            <div className="label">Resumen</div>
+            <div className="summary-line" style={{ marginTop: 12 }}><span>Productos distintos</span><span className="wp-num">{cart.length}</span></div>
+            <div className="summary-line"><span>Total de prendas</span><span className="wp-num"><strong>{count}</strong></span></div>
             <hr className="hr" />
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-              <span style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: "17px" }}>Total</span>
-              <span className="wp-num" style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: "24px" }}>{fmt(sub)}</span>
-            </div>
-            <Link 
-              href="/checkout" 
-              className="btn" 
-              style={{ width: "100%", marginTop: "18px", background: "var(--color-accent)", color: "#fff", border: "1px solid var(--color-accent)", padding: "13px", fontSize: "13.5px", letterSpacing: "0.06em", textTransform: "uppercase", textAlign: "center", display: "block" }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = "var(--color-accent-600)"; e.currentTarget.style.borderColor = "var(--color-accent-600)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = "var(--color-accent)"; e.currentTarget.style.borderColor = "var(--color-accent)"; }}
-            >
-              Continuar compra
-            </Link>
-            <Link href="/catalog" className="btn btn-ghost" style={{ width: "100%", marginTop: "8px", fontSize: "13px", textAlign: "center", display: "block" }}>
-              Seguir comprando
-            </Link>
-            <div style={{ fontSize: "12.5px", color: "var(--color-neutral-700)", marginTop: "14px", lineHeight: 1.5 }}>
-              Facturación con RUC disponible. Entrega en 24–48 h para stock en Lima.
-            </div>
-          </div>
+            <Link href="/checkout" className="btn-solid btn-block">Finalizar compra</Link>
+            <Link href="/catalog" className="btn-outline btn-block" style={{ marginTop: 10 }}>Seguir comprando</Link>
+            <p className="muted" style={{ fontSize: 12.5, marginTop: 14, lineHeight: 1.5 }}>
+              Completarás tus datos y el pedido se enviará por WhatsApp a Work Protech. Te responderemos con la cotización y los plazos de entrega.
+            </p>
+          </aside>
         </div>
       )}
     </section>
